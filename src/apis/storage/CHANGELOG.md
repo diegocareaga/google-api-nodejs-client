@@ -1,5 +1,28 @@
 # Changelog
 
+## [5.1.0](https://github.com/googleapis/google-api-nodejs-client/compare/storage-v5.0.0...storage-v5.1.0) (2023-07-18)
+
+
+### Features
+
+* regenerate index files ([c6ce6db](https://github.com/googleapis/google-api-nodejs-client/commit/c6ce6db24417be7ec0d5cb572288042973a390e0))
+
+
+### Bug Fixes
+
+* **storage:** update the API ([fff6e17](https://github.com/googleapis/google-api-nodejs-client/commit/fff6e17e17caae9296c35d74582f2af60a07a5b9))
+
+## [5.0.0](https://github.com/googleapis/google-api-nodejs-client/compare/storage-v4.1.0...storage-v5.0.0) (2023-06-22)
+
+
+### ⚠ BREAKING CHANGES
+
+* This release has breaking changes.
+
+### Features
+
+* run the generator ([#3260](https://github.com/googleapis/google-api-nodejs-client/issues/3260)) ([8efb786](https://github.com/googleapis/google-api-nodejs-client/commit/8efb7861b7da4bc1472a4b654e46f90b29fbff20))
+
 ## [4.1.0](https://github.com/googleapis/google-api-nodejs-client/compare/storage-v4.0.0...storage-v4.1.0) (2023-03-13)
 
 

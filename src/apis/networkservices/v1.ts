@@ -285,7 +285,7 @@ export namespace networkservices_v1 {
    */
   export interface Schema$Gateway {
     /**
-     * Optional. Zero or one IPv4-address on which the Gateway will receive the traffic. When no address is provided, an IP from the subnetwork is allocated This field only applies to gateways of type 'SECURE_WEB_GATEWAY'. Gateways of type 'OPEN_MESH' listen on 0.0.0.0.
+     * Optional. Zero or one IPv4 or IPv6 address on which the Gateway will receive the traffic. When no address is provided, an IP from the subnetwork is allocated This field only applies to gateways of type 'SECURE_WEB_GATEWAY'. Gateways of type 'OPEN_MESH' listen on 0.0.0.0 for IPv4 and :: for IPv6.
      */
     addresses?: string[] | null;
     /**
@@ -317,7 +317,7 @@ export namespace networkservices_v1 {
      */
     network?: string | null;
     /**
-     * Required. One or more port numbers (1-65535), on which the Gateway will receive traffic. The proxy binds to the specified ports. Gateways of type 'SECURE_WEB_GATEWAY' are limited to 1 port. Gateways of type 'OPEN_MESH' listen on 0.0.0.0 and support multiple ports.
+     * Required. One or more port numbers (1-65535), on which the Gateway will receive traffic. The proxy binds to the specified ports. Gateways of type 'SECURE_WEB_GATEWAY' are limited to 1 port. Gateways of type 'OPEN_MESH' listen on 0.0.0.0 for IPv4 and :: for IPv6 and support multiple ports.
      */
     ports?: number[] | null;
     /**
@@ -946,6 +946,10 @@ export namespace networkservices_v1 {
      * If there might be more results than those appearing in this response, then `next_page_token` is included. To get the next set of results, call this method again using the value of `next_page_token` as `page_token`.
      */
     nextPageToken?: string | null;
+    /**
+     * Locations that could not be reached.
+     */
+    unreachable?: string[] | null;
   }
   /**
    * Response returned by the ListGrpcRoutes method.
@@ -1089,7 +1093,7 @@ export namespace networkservices_v1 {
      */
     description?: string | null;
     /**
-     * Optional. If set to a valid TCP port (1-65535), instructs the SIDECAR proxy to listen on the specified port of localhost (127.0.0.1) address. The SIDECAR proxy will expect all traffic to be redirected to this port regardless of its actual ip:port destination. If unset, a port '15001' is used as the interception port. This will is applicable only for sidecar proxy deployments.
+     * Optional. If set to a valid TCP port (1-65535), instructs the SIDECAR proxy to listen on the specified port of localhost (127.0.0.1) address. The SIDECAR proxy will expect all traffic to be redirected to this port regardless of its actual ip:port destination. If unset, a port '15001' is used as the interception port. This is applicable only for sidecar proxy deployments.
      */
     interceptionPort?: number | null;
     /**
@@ -1212,6 +1216,10 @@ export namespace networkservices_v1 {
      * Required. The full Service Directory Service name of the format projects/x/locations/x/namespaces/x/services/x
      */
     service?: string | null;
+    /**
+     * Output only. The unique identifier of the Service Directory Service against which the Service Binding resource is validated. This is populated when the Service Binding resource is used in another resource (like Backend Service). This is of the UUID4 format.
+     */
+    serviceId?: string | null;
     /**
      * Output only. The timestamp when the resource was updated.
      */
@@ -5103,7 +5111,8 @@ export namespace networkservices_v1 {
      *   // Example response
      *   // {
      *   //   "gateways": [],
-     *   //   "nextPageToken": "my_nextPageToken"
+     *   //   "nextPageToken": "my_nextPageToken",
+     *   //   "unreachable": []
      *   // }
      * }
      *
@@ -9160,6 +9169,7 @@ export namespace networkservices_v1 {
      *       //   "labels": {},
      *       //   "name": "my_name",
      *       //   "service": "my_service",
+     *       //   "serviceId": "my_serviceId",
      *       //   "updateTime": "my_updateTime"
      *       // }
      *     },
@@ -9440,6 +9450,7 @@ export namespace networkservices_v1 {
      *   //   "labels": {},
      *   //   "name": "my_name",
      *   //   "service": "my_service",
+     *   //   "serviceId": "my_serviceId",
      *   //   "updateTime": "my_updateTime"
      *   // }
      * }

@@ -135,6 +135,10 @@ import {
   VERSIONS as binaryauthorizationVersions,
   binaryauthorization,
 } from './binaryauthorization';
+import {
+  VERSIONS as blockchainnodeengineVersions,
+  blockchainnodeengine,
+} from './blockchainnodeengine';
 import {VERSIONS as bloggerVersions, blogger} from './blogger';
 import {VERSIONS as booksVersions, books} from './books';
 import {
@@ -147,6 +151,7 @@ import {
   certificatemanager,
 } from './certificatemanager';
 import {VERSIONS as chatVersions, chat} from './chat';
+import {VERSIONS as checksVersions, checks} from './checks';
 import {
   VERSIONS as chromemanagementVersions,
   chromemanagement,
@@ -697,12 +702,14 @@ export const APIS: APIList = {
   bigtableadmin: bigtableadminVersions,
   billingbudgets: billingbudgetsVersions,
   binaryauthorization: binaryauthorizationVersions,
+  blockchainnodeengine: blockchainnodeengineVersions,
   blogger: bloggerVersions,
   books: booksVersions,
   businessprofileperformance: businessprofileperformanceVersions,
   calendar: calendarVersions,
   certificatemanager: certificatemanagerVersions,
   chat: chatVersions,
+  checks: checksVersions,
   chromemanagement: chromemanagementVersions,
   chromepolicy: chromepolicyVersions,
   chromeuxreport: chromeuxreportVersions,
@@ -970,12 +977,14 @@ export class GeneratedAPIs {
   bigtableadmin = bigtableadmin;
   billingbudgets = billingbudgets;
   binaryauthorization = binaryauthorization;
+  blockchainnodeengine = blockchainnodeengine;
   blogger = blogger;
   books = books;
   businessprofileperformance = businessprofileperformance;
   calendar = calendar;
   certificatemanager = certificatemanager;
   chat = chat;
+  checks = checks;
   chromemanagement = chromemanagement;
   chromepolicy = chromepolicy;
   chromeuxreport = chromeuxreport;

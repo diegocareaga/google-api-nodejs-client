@@ -1,5 +1,24 @@
 # Changelog
 
+## [10.1.0](https://github.com/googleapis/google-api-nodejs-client/compare/youtube-v10.0.0...youtube-v10.1.0) (2023-07-18)
+
+
+### Features
+
+* regenerate index files ([4216892](https://github.com/googleapis/google-api-nodejs-client/commit/42168925208e087c952d1fc8267847731d05ae9f))
+* **youtube:** update the API ([e561963](https://github.com/googleapis/google-api-nodejs-client/commit/e561963b463b8a08aceb2d780c2065b0956eeefc))
+
+## [10.0.0](https://github.com/googleapis/google-api-nodejs-client/compare/youtube-v9.0.0...youtube-v10.0.0) (2023-06-22)
+
+
+### ⚠ BREAKING CHANGES
+
+* This release has breaking changes.
+
+### Features
+
+* run the generator ([#3260](https://github.com/googleapis/google-api-nodejs-client/issues/3260)) ([8efb786](https://github.com/googleapis/google-api-nodejs-client/commit/8efb7861b7da4bc1472a4b654e46f90b29fbff20))
+
 ## [9.0.0](https://github.com/googleapis/google-api-nodejs-client/compare/youtube-v8.0.2...youtube-v9.0.0) (2023-03-22)
 
 

@@ -728,6 +728,11 @@
                     "name"
                   ],
                   "parameters": {
+                    "force": {
+                      "description": "If set to true, all running nodes belonging to this queued resource will be deleted first and then the queued resource will be deleted. Otherwise (i.e. force=false), the queued resource will only be deleted if its nodes have already been deleted or the queued resource is in the ACCEPTED, FAILED, or SUSPENDED state.",
+                      "location": "query",
+                      "type": "boolean"
+                    },
                     "name": {
                       "description": "Required. The resource name.",
                       "location": "path",
@@ -892,7 +897,7 @@
       }
     }
   },
-  "revision": "20230420",
+  "revision": "20230707",
   "rootUrl": "https://tpu.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -1464,6 +1469,11 @@
           "description": "Custom metadata to apply to the TPU Node. Can set startup-script and shutdown-script",
           "type": "object"
         },
+        "multisliceNode": {
+          "description": "Output only. Whether the Node belongs to a Multislice group.",
+          "readOnly": true,
+          "type": "boolean"
+        },
         "name": {
           "description": "Output only. Immutable. The name of the TPU.",
           "readOnly": true,
@@ -1666,7 +1676,7 @@
         },
         "guaranteed": {
           "$ref": "Guaranteed",
-          "description": "The Guaranteed tier"
+          "description": "The Guaranteed tier."
         },
         "name": {
           "description": "Output only. Immutable. The name of the QueuedResource.",
@@ -1680,6 +1690,10 @@
         "reservationName": {
           "description": "Name of the reservation in which the resource should be provisioned. Format: projects/{project}/locations/{zone}/reservations/{reservation}",
           "type": "string"
+        },
+        "spot": {
+          "$ref": "Spot",
+          "description": "Optional. The Spot tier."
         },
         "state": {
           "$ref": "QueuedResourceState",
@@ -1871,6 +1885,12 @@
           "type": "array"
         }
       },
+      "type": "object"
+    },
+    "Spot": {
+      "description": "Spot tier definition.",
+      "id": "Spot",
+      "properties": {},
       "type": "object"
     },
     "StartNodeRequest": {

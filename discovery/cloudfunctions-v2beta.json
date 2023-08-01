@@ -571,7 +571,7 @@
       }
     }
   },
-  "revision": "20230420",
+  "revision": "20230629",
   "rootUrl": "https://cloudfunctions.googleapis.com/",
   "schemas": {
     "AuditConfig": {
@@ -842,6 +842,11 @@
           "description": "A user-defined name of the function. Function names must be unique globally and match pattern `projects/*/locations/*/functions/*`",
           "type": "string"
         },
+        "satisfiesPzs": {
+          "description": "Output only. Reserved for future use.",
+          "readOnly": true,
+          "type": "boolean"
+        },
         "serviceConfig": {
           "$ref": "ServiceConfig",
           "description": "Describes the Service being deployed. Currently deploys services to Cloud Run (fully managed)."
@@ -878,6 +883,11 @@
         "updateTime": {
           "description": "Output only. The last update timestamp of a Cloud Function.",
           "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "url": {
+          "description": "Output only. The deployed url for the function.",
           "readOnly": true,
           "type": "string"
         }
@@ -927,6 +937,30 @@
       },
       "type": "object"
     },
+    "GoogleCloudFunctionsV2LocationMetadata": {
+      "description": "Extra GCF specific location information.",
+      "id": "GoogleCloudFunctionsV2LocationMetadata",
+      "properties": {
+        "environments": {
+          "description": "The Cloud Function environments this location supports.",
+          "items": {
+            "enum": [
+              "ENVIRONMENT_UNSPECIFIED",
+              "GEN_1",
+              "GEN_2"
+            ],
+            "enumDescriptions": [
+              "Unspecified",
+              "Gen 1",
+              "Gen 2"
+            ],
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudFunctionsV2OperationMetadata": {
       "description": "Represents the metadata of the long-running operation.",
       "id": "GoogleCloudFunctionsV2OperationMetadata",
@@ -936,7 +970,7 @@
           "type": "string"
         },
         "cancelRequested": {
-          "description": "Identifies whether the user has requested cancellation of the operation. Operations that have successfully been cancelled have Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+          "description": "Identifies whether the user has requested cancellation of the operation. Operations that have successfully been cancelled have google.longrunning.Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
           "type": "boolean"
         },
         "createTime": {
@@ -1074,6 +1108,30 @@
       },
       "type": "object"
     },
+    "GoogleCloudFunctionsV2alphaLocationMetadata": {
+      "description": "Extra GCF specific location information.",
+      "id": "GoogleCloudFunctionsV2alphaLocationMetadata",
+      "properties": {
+        "environments": {
+          "description": "The Cloud Function environments this location supports.",
+          "items": {
+            "enum": [
+              "ENVIRONMENT_UNSPECIFIED",
+              "GEN_1",
+              "GEN_2"
+            ],
+            "enumDescriptions": [
+              "Unspecified",
+              "Gen 1",
+              "Gen 2"
+            ],
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudFunctionsV2alphaOperationMetadata": {
       "description": "Represents the metadata of the long-running operation.",
       "id": "GoogleCloudFunctionsV2alphaOperationMetadata",
@@ -1083,7 +1141,7 @@
           "type": "string"
         },
         "cancelRequested": {
-          "description": "Identifies whether the user has requested cancellation of the operation. Operations that have successfully been cancelled have Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+          "description": "Identifies whether the user has requested cancellation of the operation. Operations that have successfully been cancelled have google.longrunning.Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
           "type": "boolean"
         },
         "createTime": {
@@ -1221,6 +1279,30 @@
       },
       "type": "object"
     },
+    "GoogleCloudFunctionsV2betaLocationMetadata": {
+      "description": "Extra GCF specific location information.",
+      "id": "GoogleCloudFunctionsV2betaLocationMetadata",
+      "properties": {
+        "environments": {
+          "description": "The Cloud Function environments this location supports.",
+          "items": {
+            "enum": [
+              "ENVIRONMENT_UNSPECIFIED",
+              "GEN_1",
+              "GEN_2"
+            ],
+            "enumDescriptions": [
+              "Unspecified",
+              "Gen 1",
+              "Gen 2"
+            ],
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudFunctionsV2betaOperationMetadata": {
       "description": "Represents the metadata of the long-running operation.",
       "id": "GoogleCloudFunctionsV2betaOperationMetadata",
@@ -1230,7 +1312,7 @@
           "type": "string"
         },
         "cancelRequested": {
-          "description": "Identifies whether the user has requested cancellation of the operation. Operations that have successfully been cancelled have Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
+          "description": "Identifies whether the user has requested cancellation of the operation. Operations that have successfully been cancelled have google.longrunning.Operation.error value with a google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.",
           "type": "boolean"
         },
         "createTime": {
@@ -1616,10 +1698,6 @@
           "description": "Directory, relative to the source root, in which to run the build. This must be a relative path. If a step's `dir` is specified and is an absolute path, this value is ignored for that step's execution. eg. helloworld (no leading slash allowed)",
           "type": "string"
         },
-        "invertRegex": {
-          "description": "Only trigger a build if the revision regex does NOT match the revision regex.",
-          "type": "boolean"
-        },
         "projectId": {
           "description": "ID of the project that owns the Cloud Source Repository. If omitted, the project ID requesting the build is assumed.",
           "type": "string"
@@ -1904,6 +1982,10 @@
       "description": "The location of the function source code.",
       "id": "Source",
       "properties": {
+        "gitUri": {
+          "description": "If provided, get the source from GitHub repository. This option is valid only for GCF 1st Gen function. Example: https://github.com///blob//",
+          "type": "string"
+        },
         "repoSource": {
           "$ref": "RepoSource",
           "description": "If provided, get the source from this location in a Cloud Source Repository."
@@ -1919,6 +2001,10 @@
       "description": "Provenance of the source. Ways to find the original source, or verify that some source was used for this build.",
       "id": "SourceProvenance",
       "properties": {
+        "gitUri": {
+          "description": "A copy of the build's `source.git_uri`, if exists, with any commits resolved.",
+          "type": "string"
+        },
         "resolvedRepoSource": {
           "$ref": "RepoSource",
           "description": "A copy of the build's `source.repo_source`, if exists, with any revisions resolved."

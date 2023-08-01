@@ -165,6 +165,10 @@ export namespace securitycenter_v1beta2 {
      */
     serviceName?: string | null;
     /**
+     * The caller's user agent string associated with the finding.
+     */
+    userAgent?: string | null;
+    /**
      * Type of user agent associated with the finding. For example, an operating system shell or an embedded or standalone application.
      */
     userAgentFamily?: string | null;
@@ -214,6 +218,10 @@ export namespace securitycenter_v1beta2 {
      * Name of the data profile, for example, `projects/123/locations/europe/tableProfiles/8383929`.
      */
     dataProfile?: string | null;
+    /**
+     * The resource hierarchy level at which the data profile was generated.
+     */
+    parentType?: string | null;
   }
   /**
    * Details about the Cloud Data Loss Prevention (Cloud DLP) [inspection job](https://cloud.google.com/dlp/docs/concepts-job-triggers) that produced the finding.
@@ -313,6 +321,10 @@ export namespace securitycenter_v1beta2 {
    * Container associated with the finding.
    */
   export interface Schema$Container {
+    /**
+     * The time that the container was created.
+     */
+    createTime?: string | null;
     /**
      * Optional container image ID, if provided by the container runtime. Uniquely identifies the container image launched using a container image digest.
      */
@@ -418,7 +430,7 @@ export namespace securitycenter_v1beta2 {
     userInteraction?: string | null;
   }
   /**
-   * Represents database access information, such as queries. A database may be a sub-resource of an instance (as in the case of Cloud SQL instances or Cloud Spanner instances), or the database instance itself. Some database resources might not have the [full resource name](https://google.aip.dev/122#full-resource-names) populated because these resource types, such as Cloud SQL databases, are not yet supported by Cloud Asset Inventory. In these cases only the display name is provided. Some database resources may not have the [full resource name](https://google.aip.dev/122#full-resource-names) populated because these resource types are not yet supported by Cloud Asset Inventory (e.g. Cloud SQL databases). In these cases only the display name will be provided.
+   * Represents database access information, such as queries. A database may be a sub-resource of an instance (as in the case of Cloud SQL instances or Cloud Spanner instances), or the database instance itself. Some database resources might not have the [full resource name](https://google.aip.dev/122#full-resource-names) populated because these resource types, such as Cloud SQL databases, are not yet supported by Cloud Asset Inventory. In these cases only the display name is provided.
    */
   export interface Schema$Database {
     /**
@@ -430,7 +442,7 @@ export namespace securitycenter_v1beta2 {
      */
     grantees?: string[] | null;
     /**
-     * The [full resource name](https://google.aip.dev/122#full-resource-names) of the database that the user connected to, if it is supported by Cloud Asset Inventory.
+     * Some database resources may not have the [full resource name](https://google.aip.dev/122#full-resource-names) populated because these resource types are not yet supported by Cloud Asset Inventory (e.g. Cloud SQL databases). In these cases only the display name will be provided. The [full resource name](https://google.aip.dev/122#full-resource-names) of the database that the user connected to, if it is supported by Cloud Asset Inventory.
      */
     name?: string | null;
     /**
@@ -441,6 +453,10 @@ export namespace securitycenter_v1beta2 {
      * The username used to connect to the database. The username might not be an IAM principal and does not have a set format.
      */
     userName?: string | null;
+    /**
+     * The version of the database, for example, POSTGRES_14. See [the complete list](https://cloud.google.com/sql/docs/mysql/admin-api/rest/v1/SqlDatabaseVersion).
+     */
+    version?: string | null;
   }
   /**
    * Details of a subscription.

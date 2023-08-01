@@ -407,6 +407,10 @@ export namespace networkmanagement_v1 {
      */
     cloudSqlInstance?: string | null;
     /**
+     * A forwarding rule and its corresponding IP address represent the frontend configuration of a Google Cloud load balancer. Forwarding rules are also used for protocol forwarding, Private Service Connect and other network services to provide forwarding information in the control plane. Format: projects/{project\}/global/forwardingRules/{id\} or projects/{project\}/regions/{region\}/forwardingRules/{id\}
+     */
+    forwardingRule?: string | null;
+    /**
      * A cluster URI for [Google Kubernetes Engine master](https://cloud.google.com/kubernetes-engine/docs/concepts/cluster-architecture).
      */
     gkeMasterCluster?: string | null;
@@ -600,6 +604,19 @@ export namespace networkmanagement_v1 {
      * Internal IP address of a GKE cluster master.
      */
     internalIp?: string | null;
+  }
+  /**
+   * For display only. Details of a Google Service sending packets to a VPC network. Although the source IP might be a publicly routable address, some Google Services use special routes within Google production infrastructure to reach Compute Engine Instances. https://cloud.google.com/vpc/docs/routes#special_return_paths
+   */
+  export interface Schema$GoogleServiceInfo {
+    /**
+     * Recognized type of a Google Service.
+     */
+    googleServiceType?: string | null;
+    /**
+     * Source IP address.
+     */
+    sourceIp?: string | null;
   }
   /**
    * For display only. Metadata associated with a Compute Engine instance.
@@ -1024,6 +1041,10 @@ export namespace networkmanagement_v1 {
      * Display information of a Google Kubernetes Engine cluster master.
      */
     gkeMaster?: Schema$GKEMasterInfo;
+    /**
+     * Display information of a Google service
+     */
+    googleService?: Schema$GoogleServiceInfo;
     /**
      * Display information of a Compute Engine instance.
      */

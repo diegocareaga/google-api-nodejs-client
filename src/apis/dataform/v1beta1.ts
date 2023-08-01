@@ -359,6 +359,15 @@ export namespace dataform_v1beta1 {
     target?: Schema$Target;
   }
   /**
+   * `ComputeRepositoryAccessTokenStatus` response message.
+   */
+  export interface Schema$ComputeRepositoryAccessTokenStatusResponse {
+    /**
+     * Indicates the status of the Git access token.
+     */
+    tokenStatus?: string | null;
+  }
+  /**
    * Represents a relation which is not managed by Dataform but which may be referenced by Dataform actions.
    */
   export interface Schema$Declaration {
@@ -458,7 +467,7 @@ export namespace dataform_v1beta1 {
      */
     defaultBranch?: string | null;
     /**
-     * Output only. Indicates the status of the Git access token.
+     * Output only. Deprecated: The field does not contain any token status information. Instead use https://cloud.google.com/dataform/reference/rest/v1beta1/projects.locations.repositories/computeAccessTokenStatus
      */
     tokenStatus?: string | null;
     /**
@@ -532,6 +541,10 @@ export namespace dataform_v1beta1 {
      * Optional. The set of action identifiers to include.
      */
     includedTargets?: Schema$Target[];
+    /**
+     * Optional. The service account to run workflow invocations under.
+     */
+    serviceAccount?: string | null;
     /**
      * Optional. When set to true, transitive dependencies of included actions will be executed.
      */
@@ -657,7 +670,7 @@ export namespace dataform_v1beta1 {
     workspaces?: Schema$Workspace[];
   }
   /**
-   * A resource that represents Google Cloud Platform location.
+   * A resource that represents a Google Cloud location.
    */
   export interface Schema$Location {
     /**
@@ -1023,6 +1036,10 @@ export namespace dataform_v1beta1 {
      */
     npmrcEnvironmentVariablesSecretVersion?: string | null;
     /**
+     * Optional. The service account to run workflow invocations under.
+     */
+    serviceAccount?: string | null;
+    /**
      * Optional. If set, fields of `workspace_compilation_overrides` override the default compilation settings that are specified in dataform.json when creating workspace-scoped compilation results. See documentation for `WorkspaceCompilationOverrides` for more information.
      */
     workspaceCompilationOverrides?: Schema$WorkspaceCompilationOverrides;
@@ -1182,7 +1199,7 @@ export namespace dataform_v1beta1 {
    */
   export interface Schema$WorkflowInvocation {
     /**
-     * Immutable. The name of the compilation result to compile. Must be in the format `projects/x/locations/x/repositories/x/compilationResults/x`.
+     * Immutable. The name of the compilation result to use for this invocation. Must be in the format `projects/x/locations/x/repositories/x/compilationResults/x`.
      */
     compilationResult?: string | null;
     /**
@@ -1628,6 +1645,145 @@ export namespace dataform_v1beta1 {
     }
 
     /**
+     * Computes a Repository's Git access token status.
+     * @example
+     * ```js
+     * // Before running the sample:
+     * // - Enable the API at:
+     * //   https://console.developers.google.com/apis/api/dataform.googleapis.com
+     * // - Login into gcloud by running:
+     * //   `$ gcloud auth application-default login`
+     * // - Install the npm module by running:
+     * //   `$ npm install googleapis`
+     *
+     * const {google} = require('googleapis');
+     * const dataform = google.dataform('v1beta1');
+     *
+     * async function main() {
+     *   const auth = new google.auth.GoogleAuth({
+     *     // Scopes can be specified either as an array or as a single, space-delimited string.
+     *     scopes: ['https://www.googleapis.com/auth/cloud-platform'],
+     *   });
+     *
+     *   // Acquire an auth client, and bind it to all future calls
+     *   const authClient = await auth.getClient();
+     *   google.options({auth: authClient});
+     *
+     *   // Do the magic
+     *   const res =
+     *     await dataform.projects.locations.repositories.computeAccessTokenStatus({
+     *       // Required. The repository's name.
+     *       name: 'projects/my-project/locations/my-location/repositories/my-repositorie',
+     *     });
+     *   console.log(res.data);
+     *
+     *   // Example response
+     *   // {
+     *   //   "tokenStatus": "my_tokenStatus"
+     *   // }
+     * }
+     *
+     * main().catch(e => {
+     *   console.error(e);
+     *   throw e;
+     * });
+     *
+     * ```
+     *
+     * @param params - Parameters for request
+     * @param options - Optionally override request options, such as `url`, `method`, and `encoding`.
+     * @param callback - Optional callback that handles the response.
+     * @returns A promise if used with async/await, or void if used with a callback.
+     */
+    computeAccessTokenStatus(
+      params: Params$Resource$Projects$Locations$Repositories$Computeaccesstokenstatus,
+      options: StreamMethodOptions
+    ): GaxiosPromise<Readable>;
+    computeAccessTokenStatus(
+      params?: Params$Resource$Projects$Locations$Repositories$Computeaccesstokenstatus,
+      options?: MethodOptions
+    ): GaxiosPromise<Schema$ComputeRepositoryAccessTokenStatusResponse>;
+    computeAccessTokenStatus(
+      params: Params$Resource$Projects$Locations$Repositories$Computeaccesstokenstatus,
+      options: StreamMethodOptions | BodyResponseCallback<Readable>,
+      callback: BodyResponseCallback<Readable>
+    ): void;
+    computeAccessTokenStatus(
+      params: Params$Resource$Projects$Locations$Repositories$Computeaccesstokenstatus,
+      options:
+        | MethodOptions
+        | BodyResponseCallback<Schema$ComputeRepositoryAccessTokenStatusResponse>,
+      callback: BodyResponseCallback<Schema$ComputeRepositoryAccessTokenStatusResponse>
+    ): void;
+    computeAccessTokenStatus(
+      params: Params$Resource$Projects$Locations$Repositories$Computeaccesstokenstatus,
+      callback: BodyResponseCallback<Schema$ComputeRepositoryAccessTokenStatusResponse>
+    ): void;
+    computeAccessTokenStatus(
+      callback: BodyResponseCallback<Schema$ComputeRepositoryAccessTokenStatusResponse>
+    ): void;
+    computeAccessTokenStatus(
+      paramsOrCallback?:
+        | Params$Resource$Projects$Locations$Repositories$Computeaccesstokenstatus
+        | BodyResponseCallback<Schema$ComputeRepositoryAccessTokenStatusResponse>
+        | BodyResponseCallback<Readable>,
+      optionsOrCallback?:
+        | MethodOptions
+        | StreamMethodOptions
+        | BodyResponseCallback<Schema$ComputeRepositoryAccessTokenStatusResponse>
+        | BodyResponseCallback<Readable>,
+      callback?:
+        | BodyResponseCallback<Schema$ComputeRepositoryAccessTokenStatusResponse>
+        | BodyResponseCallback<Readable>
+    ):
+      | void
+      | GaxiosPromise<Schema$ComputeRepositoryAccessTokenStatusResponse>
+      | GaxiosPromise<Readable> {
+      let params = (paramsOrCallback ||
+        {}) as Params$Resource$Projects$Locations$Repositories$Computeaccesstokenstatus;
+      let options = (optionsOrCallback || {}) as MethodOptions;
+
+      if (typeof paramsOrCallback === 'function') {
+        callback = paramsOrCallback;
+        params =
+          {} as Params$Resource$Projects$Locations$Repositories$Computeaccesstokenstatus;
+        options = {};
+      }
+
+      if (typeof optionsOrCallback === 'function') {
+        callback = optionsOrCallback;
+        options = {};
+      }
+
+      const rootUrl = options.rootUrl || 'https://dataform.googleapis.com/';
+      const parameters = {
+        options: Object.assign(
+          {
+            url: (
+              rootUrl + '/v1beta1/{+name}:computeAccessTokenStatus'
+            ).replace(/([^:]\/)\/+/g, '$1'),
+            method: 'GET',
+          },
+          options
+        ),
+        params,
+        requiredParams: ['name'],
+        pathParams: ['name'],
+        context: this.context,
+      };
+      if (callback) {
+        createAPIRequest<Schema$ComputeRepositoryAccessTokenStatusResponse>(
+          parameters,
+          callback as BodyResponseCallback<unknown>
+        );
+      } else {
+        return createAPIRequest<Schema$ComputeRepositoryAccessTokenStatusResponse>(
+          parameters
+        );
+      }
+    }
+
+    /**
      * Creates a new Repository in a given project and location.
      * @example
      * ```js
@@ -1666,6 +1822,7 @@ export namespace dataform_v1beta1 {
      *       //   "gitRemoteSettings": {},
      *       //   "name": "my_name",
      *       //   "npmrcEnvironmentVariablesSecretVersion": "my_npmrcEnvironmentVariablesSecretVersion",
+     *       //   "serviceAccount": "my_serviceAccount",
      *       //   "workspaceCompilationOverrides": {}
      *       // }
      *     },
@@ -1677,6 +1834,7 @@ export namespace dataform_v1beta1 {
      *   //   "gitRemoteSettings": {},
      *   //   "name": "my_name",
      *   //   "npmrcEnvironmentVariablesSecretVersion": "my_npmrcEnvironmentVariablesSecretVersion",
+     *   //   "serviceAccount": "my_serviceAccount",
      *   //   "workspaceCompilationOverrides": {}
      *   // }
      * }
@@ -2073,6 +2231,7 @@ export namespace dataform_v1beta1 {
      *   //   "gitRemoteSettings": {},
      *   //   "name": "my_name",
      *   //   "npmrcEnvironmentVariablesSecretVersion": "my_npmrcEnvironmentVariablesSecretVersion",
+     *   //   "serviceAccount": "my_serviceAccount",
      *   //   "workspaceCompilationOverrides": {}
      *   // }
      * }
@@ -2483,6 +2642,7 @@ export namespace dataform_v1beta1 {
      *       //   "gitRemoteSettings": {},
      *       //   "name": "my_name",
      *       //   "npmrcEnvironmentVariablesSecretVersion": "my_npmrcEnvironmentVariablesSecretVersion",
+     *       //   "serviceAccount": "my_serviceAccount",
      *       //   "workspaceCompilationOverrides": {}
      *       // }
      *     },
@@ -2494,6 +2654,7 @@ export namespace dataform_v1beta1 {
      *   //   "gitRemoteSettings": {},
      *   //   "name": "my_name",
      *   //   "npmrcEnvironmentVariablesSecretVersion": "my_npmrcEnvironmentVariablesSecretVersion",
+     *   //   "serviceAccount": "my_serviceAccount",
      *   //   "workspaceCompilationOverrides": {}
      *   // }
      * }
@@ -2876,6 +3037,13 @@ export namespace dataform_v1beta1 {
     }
   }
 
+  export interface Params$Resource$Projects$Locations$Repositories$Computeaccesstokenstatus
+    extends StandardParameters {
+    /**
+     * Required. The repository's name.
+     */
+    name?: string;
+  }
   export interface Params$Resource$Projects$Locations$Repositories$Create
     extends StandardParameters {
     /**

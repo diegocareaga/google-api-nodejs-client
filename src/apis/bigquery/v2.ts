@@ -995,7 +995,7 @@ export namespace bigquery_v2 {
   }
   export interface Schema$EncryptionConfiguration {
     /**
-     * [Optional] Describes the Cloud KMS encryption key that will be used to protect destination BigQuery table. The BigQuery Service Account associated with your project requires access to this encryption key.
+     * Optional. Describes the Cloud KMS encryption key that will be used to protect destination BigQuery table. The BigQuery Service Account associated with your project requires access to this encryption key.
      */
     kmsKeyName?: string | null;
   }
@@ -1259,6 +1259,10 @@ export namespace bigquery_v2 {
      */
     decimalTargetTypes?: string[] | null;
     /**
+     * [Optional] Specifies how source URIs are interpreted for constructing the file set to load. By default source URIs are expanded against the underlying storage. Other options include specifying manifest files. Only applicable to object storage systems.
+     */
+    fileSetSpecType?: string | null;
+    /**
      * [Optional] Additional options if sourceFormat is set to GOOGLE_SHEETS.
      */
     googleSheetsOptions?: Schema$GoogleSheetsOptions;
@@ -1270,6 +1274,10 @@ export namespace bigquery_v2 {
      * [Optional] Indicates if BigQuery should allow extra values that are not represented in the table schema. If true, the extra values are ignored. If false, records with extra columns are treated as bad records, and if there are too many bad records, an invalid error is returned in the job result. The default value is false. The sourceFormat property determines what BigQuery treats as an extra value: CSV: Trailing columns JSON: Named values that don't match any column names Google Cloud Bigtable: This setting is ignored. Google Cloud Datastore backups: This setting is ignored. Avro: This setting is ignored.
      */
     ignoreUnknownValues?: boolean | null;
+    /**
+     * Additional properties to set if `sourceFormat` is set to `NEWLINE_DELIMITED_JSON`.
+     */
+    jsonOptions?: Schema$JsonOptions;
     /**
      * [Optional] The maximum number of bad records that BigQuery can ignore when reading data. If the number of bad records exceeds this value, an invalid error is returned in the job result. This is only valid for CSV, JSON, and Google Sheets. The default value is 0, which requires that all records are valid. This setting is ignored for Google Cloud Bigtable, Google Cloud Datastore backups and Avro formats.
      */
@@ -1844,6 +1852,10 @@ export namespace bigquery_v2 {
      */
     fieldDelimiter?: string | null;
     /**
+     * [Optional] Specifies how source URIs are interpreted for constructing the file set to load. By default source URIs are expanded against the underlying storage. Other options include specifying manifest files. Only applicable to object storage systems.
+     */
+    fileSetSpecType?: string | null;
+    /**
      * [Optional] Options to configure hive partitioning support.
      */
     hivePartitioningOptions?: Schema$HivePartitioningOptions;
@@ -2382,6 +2394,12 @@ export namespace bigquery_v2 {
    * Represents a single JSON object.
    */
   export interface Schema$JsonObject {}
+  export interface Schema$JsonOptions {
+    /**
+     * [Optional] The character encoding of the data. The supported values are UTF-8, UTF-16BE, UTF-16LE, UTF-32BE, and UTF-32LE. The default value is UTF-8.
+     */
+    encoding?: string | null;
+  }
   export interface Schema$JsonValue {}
   export interface Schema$ListModelsResponse {
     /**
@@ -2491,7 +2509,7 @@ export namespace bigquery_v2 {
      */
     expirationTime?: string | null;
     /**
-     * Output only. Input feature columns that were used to train this model.
+     * Output only. Input feature columns for the model inference. If the model is trained with TRANSFORM clause, these are the input of the TRANSFORM clause.
      */
     featureColumns?: Schema$StandardSqlField[];
     /**
@@ -2559,15 +2577,15 @@ export namespace bigquery_v2 {
   }
   export interface Schema$ModelReference {
     /**
-     * [Required] The ID of the dataset containing this model.
+     * Required. The ID of the dataset containing this model.
      */
     datasetId?: string | null;
     /**
-     * [Required] The ID of the model. The ID must contain only letters (a-z, A-Z), numbers (0-9), or underscores (_). The maximum length is 1,024 characters.
+     * Required. The ID of the model. The ID must contain only letters (a-z, A-Z), numbers (0-9), or underscores (_). The maximum length is 1,024 characters.
      */
     modelId?: string | null;
     /**
-     * [Required] The ID of the project containing this model.
+     * Required. The ID of the project containing this model.
      */
     projectId?: string | null;
   }
@@ -3039,15 +3057,15 @@ export namespace bigquery_v2 {
   }
   export interface Schema$RoutineReference {
     /**
-     * [Required] The ID of the dataset containing this routine.
+     * Required. The ID of the dataset containing this routine.
      */
     datasetId?: string | null;
     /**
-     * [Required] The ID of the project containing this routine.
+     * Required. The ID of the project containing this routine.
      */
     projectId?: string | null;
     /**
-     * [Required] The ID of the routine. The ID must contain only letters (a-z, A-Z), numbers (0-9), or underscores (_). The maximum length is 256 characters.
+     * Required. The ID of the routine. The ID must contain only letters (a-z, A-Z), numbers (0-9), or underscores (_). The maximum length is 256 characters.
      */
     routineId?: string | null;
   }
@@ -3091,19 +3109,19 @@ export namespace bigquery_v2 {
   }
   export interface Schema$RowAccessPolicyReference {
     /**
-     * [Required] The ID of the dataset containing this row access policy.
+     * Required. The ID of the dataset containing this row access policy.
      */
     datasetId?: string | null;
     /**
-     * [Required] The ID of the row access policy. The ID must contain only letters (a-z, A-Z), numbers (0-9), or underscores (_). The maximum length is 256 characters.
+     * Required. The ID of the row access policy. The ID must contain only letters (a-z, A-Z), numbers (0-9), or underscores (_). The maximum length is 256 characters.
      */
     policyId?: string | null;
     /**
-     * [Required] The ID of the project containing this row access policy.
+     * Required. The ID of the project containing this row access policy.
      */
     projectId?: string | null;
     /**
-     * [Required] The ID of the table containing this row access policy.
+     * Required. The ID of the table containing this row access policy.
      */
     tableId?: string | null;
   }
@@ -3404,6 +3422,14 @@ export namespace bigquery_v2 {
      */
     model?: Schema$ModelDefinition;
     /**
+     * [Output-only] Number of logical bytes that are less than 90 days old.
+     */
+    numActiveLogicalBytes?: string | null;
+    /**
+     * [Output-only] Number of physical bytes less than 90 days old. This data is not kept in real time, and might be delayed by a few seconds to a few minutes.
+     */
+    numActivePhysicalBytes?: string | null;
+    /**
      * [Output-only] The size of this table in bytes, excluding any data in the streaming buffer.
      */
     numBytes?: string | null;
@@ -3411,6 +3437,18 @@ export namespace bigquery_v2 {
      * [Output-only] The number of bytes in the table that are considered "long-term storage".
      */
     numLongTermBytes?: string | null;
+    /**
+     * [Output-only] Number of logical bytes that are more than 90 days old.
+     */
+    numLongTermLogicalBytes?: string | null;
+    /**
+     * [Output-only] Number of physical bytes more than 90 days old. This data is not kept in real time, and might be delayed by a few seconds to a few minutes.
+     */
+    numLongTermPhysicalBytes?: string | null;
+    /**
+     * [Output-only] The number of partitions present in the table or materialized view. This data is not kept in real time, and might be delayed by a few seconds to a few minutes.
+     */
+    numPartitions?: string | null;
     /**
      * [Output-only] [TrustedTester] The physical size of this table in bytes, excluding any data in the streaming buffer. This includes compression and storage used for time travel.
      */
@@ -3420,37 +3458,17 @@ export namespace bigquery_v2 {
      */
     numRows?: string | null;
     /**
-     * [Output-only] Number of logical bytes that are less than 90 days old.
-     */
-    num_active_logical_bytes?: string | null;
-    /**
-     * [Output-only] Number of physical bytes less than 90 days old. This data is not kept in real time, and might be delayed by a few seconds to a few minutes.
-     */
-    num_active_physical_bytes?: string | null;
-    /**
-     * [Output-only] Number of logical bytes that are more than 90 days old.
-     */
-    num_long_term_logical_bytes?: string | null;
-    /**
-     * [Output-only] Number of physical bytes more than 90 days old. This data is not kept in real time, and might be delayed by a few seconds to a few minutes.
-     */
-    num_long_term_physical_bytes?: string | null;
-    /**
-     * [Output-only] The number of partitions present in the table or materialized view. This data is not kept in real time, and might be delayed by a few seconds to a few minutes.
-     */
-    num_partitions?: string | null;
-    /**
      * [Output-only] Number of physical bytes used by time travel storage (deleted or changed data). This data is not kept in real time, and might be delayed by a few seconds to a few minutes.
      */
-    num_time_travel_physical_bytes?: string | null;
+    numTimeTravelPhysicalBytes?: string | null;
     /**
      * [Output-only] Total number of logical bytes in the table or materialized view.
      */
-    num_total_logical_bytes?: string | null;
+    numTotalLogicalBytes?: string | null;
     /**
      * [Output-only] The physical size of this table in bytes. This also includes storage used for time travel. This data is not kept in real time, and might be delayed by a few seconds to a few minutes.
      */
-    num_total_physical_bytes?: string | null;
+    numTotalPhysicalBytes?: string | null;
     /**
      * [TrustedTester] Range partitioning specification for this table. Only one of timePartitioning and rangePartitioning should be specified.
      */
@@ -3476,6 +3494,10 @@ export namespace bigquery_v2 {
      */
     streamingBuffer?: Schema$Streamingbuffer;
     /**
+     * [Optional] The table constraints on the table.
+     */
+    tableConstraints?: Schema$TableConstraints;
+    /**
      * [Required] Reference describing the ID of this table.
      */
     tableReference?: Schema$TableReference;
@@ -3494,6 +3516,27 @@ export namespace bigquery_v2 {
   }
   export interface Schema$TableCell {
     v?: any | null;
+  }
+  export interface Schema$TableConstraints {
+    /**
+     * [Optional] The foreign keys of the tables.
+     */
+    foreignKeys?: Array<{
+      columnReferences?: Array<{
+        referencedColumn?: string;
+        referencingColumn?: string;
+      }>;
+      name?: string;
+      referencedTable?: {
+        datasetId?: string;
+        projectId?: string;
+        tableId?: string;
+      };
+    }> | null;
+    /**
+     * [Optional] The primary key of the table.
+     */
+    primaryKey?: {columns?: string[]} | null;
   }
   export interface Schema$TableDataInsertAllRequest {
     /**
@@ -3699,9 +3742,17 @@ export namespace bigquery_v2 {
    */
   export interface Schema$TrainingOptions {
     /**
+     * Activation function of the neural nets.
+     */
+    activationFn?: string | null;
+    /**
      * If true, detect step changes and make data adjustment in the input time series.
      */
     adjustStepChanges?: boolean | null;
+    /**
+     * Whether to use approximate feature contribution method in XGBoost model explanation for global explain.
+     */
+    approxGlobalFeatureContrib?: boolean | null;
     /**
      * Whether to enable auto ARIMA or not.
      */
@@ -3715,6 +3766,10 @@ export namespace bigquery_v2 {
      */
     autoArimaMinOrder?: string | null;
     /**
+     * Whether to calculate class weights automatically based on the popularity of each label.
+     */
+    autoClassWeights?: boolean | null;
+    /**
      * Batch size for dnn models.
      */
     batchSize?: string | null;
@@ -3722,6 +3777,10 @@ export namespace bigquery_v2 {
      * Booster type for boosted tree models.
      */
     boosterType?: string | null;
+    /**
+     * Budget in hours for AutoML training.
+     */
+    budgetHours?: number | null;
     /**
      * Whether or not p-value test should be computed for this model. Only available for linear and logistic regression models.
      */
@@ -3791,6 +3850,10 @@ export namespace bigquery_v2 {
      */
     feedbackType?: string | null;
     /**
+     * Whether the model should include intercept during model training.
+     */
+    fitIntercept?: boolean | null;
+    /**
      * Hidden units for dnn models.
      */
     hiddenUnits?: string[] | null;
@@ -3838,6 +3901,10 @@ export namespace bigquery_v2 {
      * The method used to initialize the centroids for kmeans algorithm.
      */
     kmeansInitializationMethod?: string | null;
+    /**
+     * L1 regularization coefficient to activations.
+     */
+    l1RegActivation?: number | null;
     /**
      * L1 regularization coefficient.
      */
@@ -3895,6 +3962,10 @@ export namespace bigquery_v2 {
      */
     minTreeChildWeight?: string | null;
     /**
+     * The model registry.
+     */
+    modelRegistry?: string | null;
+    /**
      * Google Cloud Storage URI from which the model was imported. Only applicable for imported models.
      */
     modelUri?: string | null;
@@ -3915,6 +3986,10 @@ export namespace bigquery_v2 {
      */
     numParallelTree?: string | null;
     /**
+     * Number of principal components to keep in the PCA model. Must be <= the number of features.
+     */
+    numPrincipalComponents?: string | null;
+    /**
      * Number of trials to run this hyperparameter tuning job.
      */
     numTrials?: string | null;
@@ -3923,13 +3998,29 @@ export namespace bigquery_v2 {
      */
     optimizationStrategy?: string | null;
     /**
-     * Whether to preserve the input structs in output feature names. Suppose there is a struct A with field b. When false (default), the output feature name is A_b. When true, the output feature name is A.b.
+     * Optimizer used for training the neural nets.
      */
-    preserveInputStructs?: boolean | null;
+    optimizer?: string | null;
+    /**
+     * The minimum ratio of cumulative explained variance that needs to be given by the PCA model.
+     */
+    pcaExplainedVarianceRatio?: number | null;
+    /**
+     * The solver for PCA.
+     */
+    pcaSolver?: string | null;
     /**
      * Number of paths for the sampled Shapley explain method.
      */
     sampledShapleyNumPaths?: string | null;
+    /**
+     * If true, scale the feature values by dividing the feature standard deviation. Currently only apply to PCA.
+     */
+    scaleFeatures?: boolean | null;
+    /**
+     * Whether to standardize numerical features. Default to true.
+     */
+    standardizeFeatures?: boolean | null;
     /**
      * Subsample fraction of the training data to grow tree to prevent overfitting for boosted tree models.
      */
@@ -3970,6 +4061,10 @@ export namespace bigquery_v2 {
      * User column specified for matrix factorization models.
      */
     userColumn?: string | null;
+    /**
+     * The version aliases to apply in Vertex AI model registry. Always overwrite if the version aliases exists in a existing model.
+     */
+    vertexAiModelVersionAliases?: string[] | null;
     /**
      * Hyperparameter for matrix factoration when implicit feedback type is specified.
      */
@@ -7812,7 +7907,7 @@ export namespace bigquery_v2 {
      *   const res = await bigquery.routines.list({
      *     // Required. Dataset ID of the routines to list
      *     datasetId: '[^/]+',
-     *     // If set, then only the Routines matching this filter are returned. The current supported form is either "routine_type:" or "routineType:", where is a RoutineType enum. Example: "routineType:SCALAR_FUNCTION".
+     *     // If set, then only the Routines matching this filter are returned. The supported format is `routineType:{RoutineType\}`, where `{RoutineType\}` is a RoutineType enum. For example: `routineType:SCALAR_FUNCTION`.
      *     filter: 'placeholder-value',
      *     // The maximum number of results to return in a single response page. Leverage the page tokens to iterate through the entire collection.
      *     maxResults: 'placeholder-value',
@@ -8154,7 +8249,7 @@ export namespace bigquery_v2 {
      */
     datasetId?: string;
     /**
-     * If set, then only the Routines matching this filter are returned. The current supported form is either "routine_type:" or "routineType:", where is a RoutineType enum. Example: "routineType:SCALAR_FUNCTION".
+     * If set, then only the Routines matching this filter are returned. The supported format is `routineType:{RoutineType\}`, where `{RoutineType\}` is a RoutineType enum. For example: `routineType:SCALAR_FUNCTION`.
      */
     filter?: string;
     /**
@@ -9412,24 +9507,25 @@ export namespace bigquery_v2 {
      *   //   "materializedView": {},
      *   //   "maxStaleness": "my_maxStaleness",
      *   //   "model": {},
+     *   //   "numActiveLogicalBytes": "my_numActiveLogicalBytes",
+     *   //   "numActivePhysicalBytes": "my_numActivePhysicalBytes",
      *   //   "numBytes": "my_numBytes",
      *   //   "numLongTermBytes": "my_numLongTermBytes",
+     *   //   "numLongTermLogicalBytes": "my_numLongTermLogicalBytes",
+     *   //   "numLongTermPhysicalBytes": "my_numLongTermPhysicalBytes",
+     *   //   "numPartitions": "my_numPartitions",
      *   //   "numPhysicalBytes": "my_numPhysicalBytes",
      *   //   "numRows": "my_numRows",
-     *   //   "num_active_logical_bytes": "my_num_active_logical_bytes",
-     *   //   "num_active_physical_bytes": "my_num_active_physical_bytes",
-     *   //   "num_long_term_logical_bytes": "my_num_long_term_logical_bytes",
-     *   //   "num_long_term_physical_bytes": "my_num_long_term_physical_bytes",
-     *   //   "num_partitions": "my_num_partitions",
-     *   //   "num_time_travel_physical_bytes": "my_num_time_travel_physical_bytes",
-     *   //   "num_total_logical_bytes": "my_num_total_logical_bytes",
-     *   //   "num_total_physical_bytes": "my_num_total_physical_bytes",
+     *   //   "numTimeTravelPhysicalBytes": "my_numTimeTravelPhysicalBytes",
+     *   //   "numTotalLogicalBytes": "my_numTotalLogicalBytes",
+     *   //   "numTotalPhysicalBytes": "my_numTotalPhysicalBytes",
      *   //   "rangePartitioning": {},
      *   //   "requirePartitionFilter": false,
      *   //   "schema": {},
      *   //   "selfLink": "my_selfLink",
      *   //   "snapshotDefinition": {},
      *   //   "streamingBuffer": {},
+     *   //   "tableConstraints": {},
      *   //   "tableReference": {},
      *   //   "timePartitioning": {},
      *   //   "type": "my_type",
@@ -9729,24 +9825,25 @@ export namespace bigquery_v2 {
      *       //   "materializedView": {},
      *       //   "maxStaleness": "my_maxStaleness",
      *       //   "model": {},
+     *       //   "numActiveLogicalBytes": "my_numActiveLogicalBytes",
+     *       //   "numActivePhysicalBytes": "my_numActivePhysicalBytes",
      *       //   "numBytes": "my_numBytes",
      *       //   "numLongTermBytes": "my_numLongTermBytes",
+     *       //   "numLongTermLogicalBytes": "my_numLongTermLogicalBytes",
+     *       //   "numLongTermPhysicalBytes": "my_numLongTermPhysicalBytes",
+     *       //   "numPartitions": "my_numPartitions",
      *       //   "numPhysicalBytes": "my_numPhysicalBytes",
      *       //   "numRows": "my_numRows",
-     *       //   "num_active_logical_bytes": "my_num_active_logical_bytes",
-     *       //   "num_active_physical_bytes": "my_num_active_physical_bytes",
-     *       //   "num_long_term_logical_bytes": "my_num_long_term_logical_bytes",
-     *       //   "num_long_term_physical_bytes": "my_num_long_term_physical_bytes",
-     *       //   "num_partitions": "my_num_partitions",
-     *       //   "num_time_travel_physical_bytes": "my_num_time_travel_physical_bytes",
-     *       //   "num_total_logical_bytes": "my_num_total_logical_bytes",
-     *       //   "num_total_physical_bytes": "my_num_total_physical_bytes",
+     *       //   "numTimeTravelPhysicalBytes": "my_numTimeTravelPhysicalBytes",
+     *       //   "numTotalLogicalBytes": "my_numTotalLogicalBytes",
+     *       //   "numTotalPhysicalBytes": "my_numTotalPhysicalBytes",
      *       //   "rangePartitioning": {},
      *       //   "requirePartitionFilter": false,
      *       //   "schema": {},
      *       //   "selfLink": "my_selfLink",
      *       //   "snapshotDefinition": {},
      *       //   "streamingBuffer": {},
+     *       //   "tableConstraints": {},
      *       //   "tableReference": {},
      *       //   "timePartitioning": {},
      *       //   "type": "my_type",
@@ -9777,24 +9874,25 @@ export namespace bigquery_v2 {
      *   //   "materializedView": {},
      *   //   "maxStaleness": "my_maxStaleness",
      *   //   "model": {},
+     *   //   "numActiveLogicalBytes": "my_numActiveLogicalBytes",
+     *   //   "numActivePhysicalBytes": "my_numActivePhysicalBytes",
      *   //   "numBytes": "my_numBytes",
      *   //   "numLongTermBytes": "my_numLongTermBytes",
+     *   //   "numLongTermLogicalBytes": "my_numLongTermLogicalBytes",
+     *   //   "numLongTermPhysicalBytes": "my_numLongTermPhysicalBytes",
+     *   //   "numPartitions": "my_numPartitions",
      *   //   "numPhysicalBytes": "my_numPhysicalBytes",
      *   //   "numRows": "my_numRows",
-     *   //   "num_active_logical_bytes": "my_num_active_logical_bytes",
-     *   //   "num_active_physical_bytes": "my_num_active_physical_bytes",
-     *   //   "num_long_term_logical_bytes": "my_num_long_term_logical_bytes",
-     *   //   "num_long_term_physical_bytes": "my_num_long_term_physical_bytes",
-     *   //   "num_partitions": "my_num_partitions",
-     *   //   "num_time_travel_physical_bytes": "my_num_time_travel_physical_bytes",
-     *   //   "num_total_logical_bytes": "my_num_total_logical_bytes",
-     *   //   "num_total_physical_bytes": "my_num_total_physical_bytes",
+     *   //   "numTimeTravelPhysicalBytes": "my_numTimeTravelPhysicalBytes",
+     *   //   "numTotalLogicalBytes": "my_numTotalLogicalBytes",
+     *   //   "numTotalPhysicalBytes": "my_numTotalPhysicalBytes",
      *   //   "rangePartitioning": {},
      *   //   "requirePartitionFilter": false,
      *   //   "schema": {},
      *   //   "selfLink": "my_selfLink",
      *   //   "snapshotDefinition": {},
      *   //   "streamingBuffer": {},
+     *   //   "tableConstraints": {},
      *   //   "tableReference": {},
      *   //   "timePartitioning": {},
      *   //   "type": "my_type",
@@ -10096,24 +10194,25 @@ export namespace bigquery_v2 {
      *       //   "materializedView": {},
      *       //   "maxStaleness": "my_maxStaleness",
      *       //   "model": {},
+     *       //   "numActiveLogicalBytes": "my_numActiveLogicalBytes",
+     *       //   "numActivePhysicalBytes": "my_numActivePhysicalBytes",
      *       //   "numBytes": "my_numBytes",
      *       //   "numLongTermBytes": "my_numLongTermBytes",
+     *       //   "numLongTermLogicalBytes": "my_numLongTermLogicalBytes",
+     *       //   "numLongTermPhysicalBytes": "my_numLongTermPhysicalBytes",
+     *       //   "numPartitions": "my_numPartitions",
      *       //   "numPhysicalBytes": "my_numPhysicalBytes",
      *       //   "numRows": "my_numRows",
-     *       //   "num_active_logical_bytes": "my_num_active_logical_bytes",
-     *       //   "num_active_physical_bytes": "my_num_active_physical_bytes",
-     *       //   "num_long_term_logical_bytes": "my_num_long_term_logical_bytes",
-     *       //   "num_long_term_physical_bytes": "my_num_long_term_physical_bytes",
-     *       //   "num_partitions": "my_num_partitions",
-     *       //   "num_time_travel_physical_bytes": "my_num_time_travel_physical_bytes",
-     *       //   "num_total_logical_bytes": "my_num_total_logical_bytes",
-     *       //   "num_total_physical_bytes": "my_num_total_physical_bytes",
+     *       //   "numTimeTravelPhysicalBytes": "my_numTimeTravelPhysicalBytes",
+     *       //   "numTotalLogicalBytes": "my_numTotalLogicalBytes",
+     *       //   "numTotalPhysicalBytes": "my_numTotalPhysicalBytes",
      *       //   "rangePartitioning": {},
      *       //   "requirePartitionFilter": false,
      *       //   "schema": {},
      *       //   "selfLink": "my_selfLink",
      *       //   "snapshotDefinition": {},
      *       //   "streamingBuffer": {},
+     *       //   "tableConstraints": {},
      *       //   "tableReference": {},
      *       //   "timePartitioning": {},
      *       //   "type": "my_type",
@@ -10144,24 +10243,25 @@ export namespace bigquery_v2 {
      *   //   "materializedView": {},
      *   //   "maxStaleness": "my_maxStaleness",
      *   //   "model": {},
+     *   //   "numActiveLogicalBytes": "my_numActiveLogicalBytes",
+     *   //   "numActivePhysicalBytes": "my_numActivePhysicalBytes",
      *   //   "numBytes": "my_numBytes",
      *   //   "numLongTermBytes": "my_numLongTermBytes",
+     *   //   "numLongTermLogicalBytes": "my_numLongTermLogicalBytes",
+     *   //   "numLongTermPhysicalBytes": "my_numLongTermPhysicalBytes",
+     *   //   "numPartitions": "my_numPartitions",
      *   //   "numPhysicalBytes": "my_numPhysicalBytes",
      *   //   "numRows": "my_numRows",
-     *   //   "num_active_logical_bytes": "my_num_active_logical_bytes",
-     *   //   "num_active_physical_bytes": "my_num_active_physical_bytes",
-     *   //   "num_long_term_logical_bytes": "my_num_long_term_logical_bytes",
-     *   //   "num_long_term_physical_bytes": "my_num_long_term_physical_bytes",
-     *   //   "num_partitions": "my_num_partitions",
-     *   //   "num_time_travel_physical_bytes": "my_num_time_travel_physical_bytes",
-     *   //   "num_total_logical_bytes": "my_num_total_logical_bytes",
-     *   //   "num_total_physical_bytes": "my_num_total_physical_bytes",
+     *   //   "numTimeTravelPhysicalBytes": "my_numTimeTravelPhysicalBytes",
+     *   //   "numTotalLogicalBytes": "my_numTotalLogicalBytes",
+     *   //   "numTotalPhysicalBytes": "my_numTotalPhysicalBytes",
      *   //   "rangePartitioning": {},
      *   //   "requirePartitionFilter": false,
      *   //   "schema": {},
      *   //   "selfLink": "my_selfLink",
      *   //   "snapshotDefinition": {},
      *   //   "streamingBuffer": {},
+     *   //   "tableConstraints": {},
      *   //   "tableReference": {},
      *   //   "timePartitioning": {},
      *   //   "type": "my_type",
@@ -10612,24 +10712,25 @@ export namespace bigquery_v2 {
      *       //   "materializedView": {},
      *       //   "maxStaleness": "my_maxStaleness",
      *       //   "model": {},
+     *       //   "numActiveLogicalBytes": "my_numActiveLogicalBytes",
+     *       //   "numActivePhysicalBytes": "my_numActivePhysicalBytes",
      *       //   "numBytes": "my_numBytes",
      *       //   "numLongTermBytes": "my_numLongTermBytes",
+     *       //   "numLongTermLogicalBytes": "my_numLongTermLogicalBytes",
+     *       //   "numLongTermPhysicalBytes": "my_numLongTermPhysicalBytes",
+     *       //   "numPartitions": "my_numPartitions",
      *       //   "numPhysicalBytes": "my_numPhysicalBytes",
      *       //   "numRows": "my_numRows",
-     *       //   "num_active_logical_bytes": "my_num_active_logical_bytes",
-     *       //   "num_active_physical_bytes": "my_num_active_physical_bytes",
-     *       //   "num_long_term_logical_bytes": "my_num_long_term_logical_bytes",
-     *       //   "num_long_term_physical_bytes": "my_num_long_term_physical_bytes",
-     *       //   "num_partitions": "my_num_partitions",
-     *       //   "num_time_travel_physical_bytes": "my_num_time_travel_physical_bytes",
-     *       //   "num_total_logical_bytes": "my_num_total_logical_bytes",
-     *       //   "num_total_physical_bytes": "my_num_total_physical_bytes",
+     *       //   "numTimeTravelPhysicalBytes": "my_numTimeTravelPhysicalBytes",
+     *       //   "numTotalLogicalBytes": "my_numTotalLogicalBytes",
+     *       //   "numTotalPhysicalBytes": "my_numTotalPhysicalBytes",
      *       //   "rangePartitioning": {},
      *       //   "requirePartitionFilter": false,
      *       //   "schema": {},
      *       //   "selfLink": "my_selfLink",
      *       //   "snapshotDefinition": {},
      *       //   "streamingBuffer": {},
+     *       //   "tableConstraints": {},
      *       //   "tableReference": {},
      *       //   "timePartitioning": {},
      *       //   "type": "my_type",
@@ -10660,24 +10761,25 @@ export namespace bigquery_v2 {
      *   //   "materializedView": {},
      *   //   "maxStaleness": "my_maxStaleness",
      *   //   "model": {},
+     *   //   "numActiveLogicalBytes": "my_numActiveLogicalBytes",
+     *   //   "numActivePhysicalBytes": "my_numActivePhysicalBytes",
      *   //   "numBytes": "my_numBytes",
      *   //   "numLongTermBytes": "my_numLongTermBytes",
+     *   //   "numLongTermLogicalBytes": "my_numLongTermLogicalBytes",
+     *   //   "numLongTermPhysicalBytes": "my_numLongTermPhysicalBytes",
+     *   //   "numPartitions": "my_numPartitions",
      *   //   "numPhysicalBytes": "my_numPhysicalBytes",
      *   //   "numRows": "my_numRows",
-     *   //   "num_active_logical_bytes": "my_num_active_logical_bytes",
-     *   //   "num_active_physical_bytes": "my_num_active_physical_bytes",
-     *   //   "num_long_term_logical_bytes": "my_num_long_term_logical_bytes",
-     *   //   "num_long_term_physical_bytes": "my_num_long_term_physical_bytes",
-     *   //   "num_partitions": "my_num_partitions",
-     *   //   "num_time_travel_physical_bytes": "my_num_time_travel_physical_bytes",
-     *   //   "num_total_logical_bytes": "my_num_total_logical_bytes",
-     *   //   "num_total_physical_bytes": "my_num_total_physical_bytes",
+     *   //   "numTimeTravelPhysicalBytes": "my_numTimeTravelPhysicalBytes",
+     *   //   "numTotalLogicalBytes": "my_numTotalLogicalBytes",
+     *   //   "numTotalPhysicalBytes": "my_numTotalPhysicalBytes",
      *   //   "rangePartitioning": {},
      *   //   "requirePartitionFilter": false,
      *   //   "schema": {},
      *   //   "selfLink": "my_selfLink",
      *   //   "snapshotDefinition": {},
      *   //   "streamingBuffer": {},
+     *   //   "tableConstraints": {},
      *   //   "tableReference": {},
      *   //   "timePartitioning": {},
      *   //   "type": "my_type",

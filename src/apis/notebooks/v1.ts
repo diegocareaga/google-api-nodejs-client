@@ -125,7 +125,7 @@ export namespace notebooks_v1 {
   }
 
   /**
-   * Definition of a hardware accelerator. Note that not all combinations of `type` and `core_count` are valid. Check [GPUs on Compute Engine](https://cloud.google.com/compute/docs/gpus/#gpus-list) to find a valid combination. TPUs are not supported.
+   * Definition of a hardware accelerator. Note that not all combinations of `type` and `core_count` are valid. See [GPUs on Compute Engine](https://cloud.google.com/compute/docs/gpus/#gpus-list) to find a valid combination. TPUs are not supported.
    */
   export interface Schema$AcceleratorConfig {
     /**
@@ -569,6 +569,10 @@ export namespace notebooks_v1 {
      */
     metadata?: {[key: string]: string} | null;
     /**
+     * Output only. Bool indicating whether this notebook has been migrated to a Workbench Instance
+     */
+    migrated?: boolean | null;
+    /**
      * Output only. The name of this notebook instance. Format: `projects/{project_id\}/locations/{location\}/instances/{instance_id\}`
      */
     name?: string | null;
@@ -585,7 +589,7 @@ export namespace notebooks_v1 {
      */
     noProxyAccess?: boolean | null;
     /**
-     * If true, no public IP will be assigned to this instance.
+     * If true, no external IP will be assigned to this instance.
      */
     noPublicIp?: boolean | null;
     /**
@@ -596,6 +600,10 @@ export namespace notebooks_v1 {
      * Path to a Bash script that automatically runs after a notebook instance fully boots up. The path must be a URL or Cloud Storage path (`gs://path-to-file/file-name`).
      */
     postStartupScript?: string | null;
+    /**
+     * Output only. Check how possible a migration from UmN to WbI is.
+     */
+    preMigrationCheck?: Schema$PreMigrationCheck;
     /**
      * Output only. The proxy endpoint that is used to access the Jupyter notebook.
      */
@@ -969,6 +977,19 @@ export namespace notebooks_v1 {
     version?: number | null;
   }
   /**
+   * PreMigrationCheck checks how feasible a migration from UmN is.
+   */
+  export interface Schema$PreMigrationCheck {
+    /**
+     * Message provides a summary or workaround.
+     */
+    message?: string | null;
+    /**
+     * Result returns the result of the check.
+     */
+    result?: string | null;
+  }
+  /**
    * Request for getting a new access token.
    */
   export interface Schema$RefreshRuntimeTokenInternalRequest {
@@ -1102,6 +1123,10 @@ export namespace notebooks_v1 {
      */
     metrics?: Schema$RuntimeMetrics;
     /**
+     * Output only. Bool indicating whether this notebook has been migrated to a Workbench Instance
+     */
+    migrated?: boolean | null;
+    /**
      * Output only. The resource name of the runtime. Format: `projects/{project\}/locations/{location\}/runtimes/{runtimeId\}`
      */
     name?: string | null;
@@ -1123,7 +1148,7 @@ export namespace notebooks_v1 {
     virtualMachine?: Schema$VirtualMachine;
   }
   /**
-   * Definition of the types of hardware accelerators that can be used. Definition of the types of hardware accelerators that can be used. See [Compute Engine AcceleratorTypes](https://cloud.google.com/compute/docs/reference/beta/acceleratorTypes). Examples: * `nvidia-tesla-k80` * `nvidia-tesla-p100` * `nvidia-tesla-v100` * `nvidia-tesla-p4` * `nvidia-tesla-t4` * `nvidia-tesla-a100`
+   * Definition of the types of hardware accelerators that can be used. See [Compute Engine AcceleratorTypes](https://cloud.google.com/compute/docs/reference/beta/acceleratorTypes). Examples: * `nvidia-tesla-k80` * `nvidia-tesla-p100` * `nvidia-tesla-v100` * `nvidia-tesla-p4` * `nvidia-tesla-t4` * `nvidia-tesla-a100`
    */
   export interface Schema$RuntimeAcceleratorConfig {
     /**
@@ -1171,7 +1196,7 @@ export namespace notebooks_v1 {
     systemMetrics?: {[key: string]: string} | null;
   }
   /**
-   * A set of Shielded Instance options. Check [Images using supported Shielded VM features](https://cloud.google.com/compute/docs/instances/modifying-shielded-vm). Not all combinations are valid.
+   * A set of Shielded Instance options. See [Images using supported Shielded VM features](https://cloud.google.com/compute/docs/instances/modifying-shielded-vm). Not all combinations are valid.
    */
   export interface Schema$RuntimeShieldedInstanceConfig {
     /**
@@ -1287,7 +1312,7 @@ export namespace notebooks_v1 {
     updateTime?: string | null;
   }
   /**
-   * Definition of a hardware accelerator. Note that not all combinations of `type` and `core_count` are valid. Check [GPUs on Compute Engine](https://cloud.google.com/compute/docs/gpus) to find a valid combination. TPUs are not supported.
+   * Definition of a hardware accelerator. Note that not all combinations of `type` and `core_count` are valid. See [GPUs on Compute Engine](https://cloud.google.com/compute/docs/gpus) to find a valid combination. TPUs are not supported.
    */
   export interface Schema$SchedulerAcceleratorConfig {
     /**
@@ -1313,7 +1338,7 @@ export namespace notebooks_v1 {
    */
   export interface Schema$SetInstanceAcceleratorRequest {
     /**
-     * Required. Count of cores of this accelerator. Note that not all combinations of `type` and `core_count` are valid. Check [GPUs on Compute Engine](https://cloud.google.com/compute/docs/gpus/#gpus-list) to find a valid combination. TPUs are not supported.
+     * Required. Count of cores of this accelerator. Note that not all combinations of `type` and `core_count` are valid. See [GPUs on Compute Engine](https://cloud.google.com/compute/docs/gpus/#gpus-list) to find a valid combination. TPUs are not supported.
      */
     coreCount?: string | null;
     /**
@@ -1340,7 +1365,7 @@ export namespace notebooks_v1 {
     machineType?: string | null;
   }
   /**
-   * A set of Shielded Instance options. Check [Images using supported Shielded VM features](https://cloud.google.com/compute/docs/instances/modifying-shielded-vm). Not all combinations are valid.
+   * A set of Shielded Instance options. See [Images using supported Shielded VM features](https://cloud.google.com/compute/docs/instances/modifying-shielded-vm). Not all combinations are valid.
    */
   export interface Schema$ShieldedInstanceConfig {
     /**
@@ -3287,6 +3312,7 @@ export namespace notebooks_v1 {
      *       //   "labels": {},
      *       //   "machineType": "my_machineType",
      *       //   "metadata": {},
+     *       //   "migrated": false,
      *       //   "name": "my_name",
      *       //   "network": "my_network",
      *       //   "nicType": "my_nicType",
@@ -3294,6 +3320,7 @@ export namespace notebooks_v1 {
      *       //   "noPublicIp": false,
      *       //   "noRemoveDataDisk": false,
      *       //   "postStartupScript": "my_postStartupScript",
+     *       //   "preMigrationCheck": {},
      *       //   "proxyUri": "my_proxyUri",
      *       //   "reservationAffinity": {},
      *       //   "serviceAccount": "my_serviceAccount",
@@ -3734,6 +3761,7 @@ export namespace notebooks_v1 {
      *   //   "labels": {},
      *   //   "machineType": "my_machineType",
      *   //   "metadata": {},
+     *   //   "migrated": false,
      *   //   "name": "my_name",
      *   //   "network": "my_network",
      *   //   "nicType": "my_nicType",
@@ -3741,6 +3769,7 @@ export namespace notebooks_v1 {
      *   //   "noPublicIp": false,
      *   //   "noRemoveDataDisk": false,
      *   //   "postStartupScript": "my_postStartupScript",
+     *   //   "preMigrationCheck": {},
      *   //   "proxyUri": "my_proxyUri",
      *   //   "reservationAffinity": {},
      *   //   "serviceAccount": "my_serviceAccount",
@@ -3978,7 +4007,7 @@ export namespace notebooks_v1 {
     }
 
     /**
-     * Check if a notebook instance is healthy.
+     * Checks whether a notebook instance is healthy.
      * @example
      * ```js
      * // Before running the sample:
@@ -4116,7 +4145,7 @@ export namespace notebooks_v1 {
     }
 
     /**
-     * Check if a notebook instance is upgradable.
+     * Checks whether a notebook instance is upgradable.
      * @example
      * ```js
      * // Before running the sample:
@@ -7719,6 +7748,7 @@ export namespace notebooks_v1 {
      *       //   "healthState": "my_healthState",
      *       //   "labels": {},
      *       //   "metrics": {},
+     *       //   "migrated": false,
      *       //   "name": "my_name",
      *       //   "softwareConfig": {},
      *       //   "state": "my_state",
@@ -8142,6 +8172,7 @@ export namespace notebooks_v1 {
      *   //   "healthState": "my_healthState",
      *   //   "labels": {},
      *   //   "metrics": {},
+     *   //   "migrated": false,
      *   //   "name": "my_name",
      *   //   "softwareConfig": {},
      *   //   "state": "my_state",
@@ -8554,6 +8585,7 @@ export namespace notebooks_v1 {
      *       //   "healthState": "my_healthState",
      *       //   "labels": {},
      *       //   "metrics": {},
+     *       //   "migrated": false,
      *       //   "name": "my_name",
      *       //   "softwareConfig": {},
      *       //   "state": "my_state",
@@ -8812,7 +8844,7 @@ export namespace notebooks_v1 {
     }
 
     /**
-     * Report and process a runtime event.
+     * Reports and processes a runtime event.
      * @example
      * ```js
      * // Before running the sample:

@@ -1292,6 +1292,43 @@ export namespace content_v2_1 {
     services?: string[] | null;
   }
   /**
+   * Product property for the Cloud Retail API. For example, properties for a TV product could be "Screen-Resolution" or "Screen-Size".
+   */
+  export interface Schema$CloudExportAdditionalProperties {
+    /**
+     * Boolean value of the given property. For example for a TV product, "True" or "False" if the screen is UHD.
+     */
+    boolValue?: boolean | null;
+    /**
+     * Float values of the given property. For example for a TV product 1.2345. Maximum number of specified values for this field is 400. Values are stored in an arbitrary but consistent order.
+     */
+    floatValue?: number[] | null;
+    /**
+     * Integer values of the given property. For example, 1080 for a screen resolution of a TV product. Maximum number of specified values for this field is 400. Values are stored in an arbitrary but consistent order.
+     */
+    intValue?: string[] | null;
+    /**
+     * Maximum float value of the given property. For example for a TV product 100.00.
+     */
+    maxValue?: number | null;
+    /**
+     * Minimum float value of the given property. For example for a TV product 1.00.
+     */
+    minValue?: number | null;
+    /**
+     * Name of the given property. For example, "Screen-Resolution" for a TV product. Maximum string size is 256 characters.
+     */
+    propertyName?: string | null;
+    /**
+     * Text value of the given property. For example, "8K(UHD)" could be a text value for a TV product. Maximum number of specified values for this field is 400. Values are stored in an arbitrary but consistent order. Maximum string size is 256 characters.
+     */
+    textValue?: string[] | null;
+    /**
+     * Unit of the given property. For example, "Pixels" for a TV product. Maximum string size is 256 bytes.
+     */
+    unitCode?: string | null;
+  }
+  /**
    * The collection message.
    */
   export interface Schema$Collection {
@@ -1457,6 +1494,59 @@ export namespace content_v2_1 {
     servability?: string | null;
   }
   /**
+   * Fields related to [competitive visibility reports] (https://support.google.com/merchants/answer/11366442).
+   */
+  export interface Schema$CompetitiveVisibility {
+    /**
+     * [Ads / organic ratio] (https://support.google.com/merchants/answer/11366442#zippy=%2Cadsfree-ratio) shows how often a merchant receives impressions from Shopping ads compared to organic traffic. The number is rounded and bucketed. Available only in `CompetitiveVisibilityTopMerchantView`. Cannot be filtered on in the 'WHERE' clause.
+     */
+    adsOrganicRatio?: number | null;
+    /**
+     * Change in visibility based on impressions with respect to the start of the selected time range (or first day with non-zero impressions) for a combined set of merchants with highest visibility approximating the market. Available only in `CompetitiveVisibilityBenchmarkView`. Cannot be filtered on in the 'WHERE' clause.
+     */
+    categoryBenchmarkVisibilityTrend?: number | null;
+    /**
+     * Google product category ID to calculate the report for, represented in [Google's product taxonomy](https://support.google.com/merchants/answer/6324436). Required in the `SELECT` clause. A `WHERE` condition on `competitive_visibility.category_id` is required in the query.
+     */
+    categoryId?: string | null;
+    /**
+     * The country where impression appeared. Required in the `SELECT` clause. A `WHERE` condition on `competitive_visibility.country_code` is required in the query.
+     */
+    countryCode?: string | null;
+    /**
+     * Date of this row. Available only in `CompetitiveVisibilityBenchmarkView`. Required in the `SELECT` clause for `CompetitiveVisibilityMarketBenchmarkView`.
+     */
+    date?: Schema$Date;
+    /**
+     * Domain of your competitor or your domain, if 'is_your_domain' is true. Available only in `CompetitiveVisibilityTopMerchantView`. Required in the `SELECT` clause for `CompetitiveVisibilityTopMerchantView`. Cannot be filtered on in the 'WHERE' clause.
+     */
+    domain?: string | null;
+    /**
+     * Higher position rate shows how often a competitor’s offer got placed in a higher position on the page than your offer. Available only in `CompetitiveVisibilityTopMerchantView`. Cannot be filtered on in the 'WHERE' clause.
+     */
+    higherPositionRate?: number | null;
+    /**
+     * True if this row contains data for your domain. Available only in `CompetitiveVisibilityTopMerchantView`. Cannot be filtered on in the 'WHERE' clause.
+     */
+    isYourDomain?: boolean | null;
+    /**
+     * Page overlap rate describes how frequently competing retailers’ offers are shown together with your offers on the same page. Available only in `CompetitiveVisibilityTopMerchantView`. Cannot be filtered on in the 'WHERE' clause.
+     */
+    pageOverlapRate?: number | null;
+    /**
+     * Position of the domain in the top merchants ranking for the selected keys (`date`, `category_id`, `country_code`, `listing_type`) based on impressions. 1 is the highest. Available only in `CompetitiveVisibilityTopMerchantView`. Cannot be filtered on in the 'WHERE' clause.
+     */
+    rank?: string | null;
+    /**
+     * Type of impression listing. Required in the `SELECT` clause for `CompetitiveVisibilityTopMerchantView` and `CompetitiveVisibilityMarketBenchmarkView`. Cannot be filtered on in the 'WHERE' clause.
+     */
+    trafficSource?: string | null;
+    /**
+     * Change in visibility based on impressions for your domain with respect to the start of the selected time range (or first day with non-zero impressions). Available only in `CompetitiveVisibilityBenchmarkView`. Cannot be filtered on in the 'WHERE' clause.
+     */
+    yourDomainVisibilityTrend?: number | null;
+  }
+  /**
    * Represents a conversion source owned by a Merchant account. A merchant account can have up to 200 conversion sources.
    */
   export interface Schema$ConversionSource {
@@ -1510,6 +1600,9 @@ export namespace content_v2_1 {
      */
     labelIds?: string[] | null;
   }
+  /**
+   * A message that represents custom attributes. Exactly one of `value` or `groupValues` must be provided. Maximum allowed number of characters for each custom attribute is 10240 (represents sum of characters for name and value). Maximum 2500 custom attributes can be set per merchant, with total size of 102.4kB.
+   */
   export interface Schema$CustomAttribute {
     /**
      * Subattributes within this attribute group. Exactly one of value or groupValues must be provided.
@@ -1999,7 +2092,7 @@ export namespace content_v2_1 {
   }
   export interface Schema$DeliveryTime {
     /**
-     * Business days cutoff time definition. If not configured the cutoff time will be defaulted to 8AM PST.
+     * Business days cutoff time definition. If not configured, the cutoff time will be defaulted to 8AM PST. If local delivery, use Service.StoreConfig.CutoffConfig.
      */
     cutoffTime?: Schema$CutoffTime;
     /**
@@ -2038,6 +2131,19 @@ export namespace content_v2_1 {
      * Indicates that the delivery time should be calculated per warehouse (shipping origin location) based on the settings of the selected carrier. When set, no other transit time related field in DeliveryTime should be set.
      */
     warehouseBasedDeliveryTimes?: Schema$WarehouseBasedDeliveryTime[];
+  }
+  /**
+   * Distance represented by an integer and unit.
+   */
+  export interface Schema$Distance {
+    /**
+     * The distance unit. Acceptable values are `None`, `Miles`, and `Kilometers`.
+     */
+    unit?: string | null;
+    /**
+     * The distance represented as a number.
+     */
+    value?: string | null;
   }
   /**
    * Additional information required for E_COMMERCE_PLATFORM link type.
@@ -2678,6 +2784,19 @@ export namespace content_v2_1 {
     nextPageToken?: string | null;
   }
   /**
+   * Response message for Promotions.List method.
+   */
+  export interface Schema$ListPromotionResponse {
+    /**
+     * A token, which can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.
+     */
+    nextPageToken?: string | null;
+    /**
+     * List of all available promotions for the merchant.
+     */
+    promotions?: Schema$Promotion[];
+  }
+  /**
    * Response message for the `ListRegions` method.
    */
   export interface Schema$ListRegionsResponse {
@@ -2976,7 +3095,7 @@ export namespace content_v2_1 {
     reasonCode?: string | null;
   }
   /**
-   * The quota information per method in the Content API. Includes only methods with current usage greater than zero for your account.
+   * The quota information per method in the Content API.
    */
   export interface Schema$MethodQuota {
     /**
@@ -5408,9 +5527,17 @@ export namespace content_v2_1 {
      */
     canonicalLink?: string | null;
     /**
+     * Product [certification](https://support.google.com/merchants/answer/13528839), introduced for EU energy efficiency labeling compliance using the [EU EPREL](https://eprel.ec.europa.eu/screen/home) database.
+     */
+    certifications?: Schema$ProductCertification[];
+    /**
      * Required. The item's channel (online or local). Acceptable values are: - "`local`" - "`online`"
      */
     channel?: string | null;
+    /**
+     * Extra fields to export to the Cloud Retail program.
+     */
+    cloudExportAdditionalProperties?: Schema$CloudExportAdditionalProperties[];
     /**
      * Color of the item.
      */
@@ -5455,6 +5582,10 @@ export namespace content_v2_1 {
      * Description of the item.
      */
     description?: string | null;
+    /**
+     * The date time when an offer becomes visible in search results across Google’s YouTube surfaces, in [ISO 8601](http://en.wikipedia.org/wiki/ISO_8601) format. See [Disclosure date](https://support.google.com/merchants/answer/13034208) for more information.
+     */
+    disclosureDate?: string | null;
     /**
      * An identifier for an item for dynamic remarketing campaigns.
      */
@@ -5735,6 +5866,10 @@ export namespace content_v2_1 {
      * The measure and dimension of an item.
      */
     unitPricingMeasure?: Schema$ProductUnitPricingMeasure;
+    /**
+     * URL of the 3D model of the item to provide more visuals.
+     */
+    virtualModelLink?: string | null;
   }
   export interface Schema$ProductAmount {
     /**
@@ -5749,6 +5884,23 @@ export namespace content_v2_1 {
      * Tax value.
      */
     taxAmount?: Schema$Price;
+  }
+  /**
+   * Product [certification](https://support.google.com/merchants/answer/13528839), introduced for EU energy efficiency labeling compliance using the [EU EPREL](https://eprel.ec.europa.eu/screen/home) database.
+   */
+  export interface Schema$ProductCertification {
+    /**
+     * The certification authority, for example "European_Commission". Maximum length is 2000 characters.
+     */
+    certificationAuthority?: string | null;
+    /**
+     * The certification code, for eaxample "123456". Maximum length is 2000 characters.
+     */
+    certificationCode?: string | null;
+    /**
+     * The name of the certification, for example "EPREL". Maximum length is 2000 characters.
+     */
+    certificationName?: string | null;
   }
   /**
    * Product cluster fields. A product cluster is a grouping for different offers that represent the same product. Values are only set for fields requested explicitly in the request's search query.
@@ -6081,7 +6233,7 @@ export namespace content_v2_1 {
      */
     pendingCountries?: string[] | null;
     /**
-     * Destination approval status in `targetCountry` of the offer.
+     * Deprecated. Destination approval status in `targetCountry` of the offer.
      */
     status?: string | null;
   }
@@ -6428,6 +6580,10 @@ export namespace content_v2_1 {
      * Canonical attribute name for attribute-specific issues.
      */
     canonicalAttribute?: string | null;
+    /**
+     * Error code of the issue.
+     */
+    code?: string | null;
   }
   export interface Schema$ProductWeight {
     /**
@@ -6996,6 +7152,10 @@ export namespace content_v2_1 {
      * Brand fields requested by the merchant in the query. Field values are only set if the merchant queries `BestSellersBrandView`.
      */
     brand?: Schema$Brand;
+    /**
+     * Competitive visibility fields requested by the merchant in the query. Field values are only set if the merchant queries `CompetitiveVisibilityTopMerchantView` or `CompetitiveVisibilityBenchmarkView`.
+     */
+    competitiveVisibility?: Schema$CompetitiveVisibility;
     /**
      * Metrics requested by the merchant in the query. Metric values are only set for metrics requested explicitly in the query.
      */
@@ -7938,9 +8098,64 @@ export namespace content_v2_1 {
      */
     rateGroups?: Schema$RateGroup[];
     /**
-     * Type of locations this service ships orders to. Acceptable values are: - "`delivery`" - "`pickup`"
+     * Type of locations this service ships orders to. Acceptable values are: - "`delivery`" - "`pickup`" - "`local_delivery`"
      */
     shipmentType?: string | null;
+    /**
+     * A list of stores your products are delivered from. This is only available for the local delivery shipment type.
+     */
+    storeConfig?: Schema$ServiceStoreConfig;
+  }
+  /**
+   * Stores that provide local delivery. Only valid with local delivery fulfillment.
+   */
+  export interface Schema$ServiceStoreConfig {
+    /**
+     * Time local delivery ends for the day. This can be either `local_cutoff_time` or `store_close_offset_hours`, if both are provided an error is thrown.
+     */
+    cutoffConfig?: Schema$ServiceStoreConfigCutoffConfig;
+    /**
+     * Maximum delivery radius. Only needed for local delivery fulfillment type.
+     */
+    serviceRadius?: Schema$Distance;
+    /**
+     * A list of store codes that provide local delivery. If empty, then `store_service_type` must be `all_stores`, or an error is thrown. If not empty, then `store_service_type` must be `selected_stores`, or an error is thrown.
+     */
+    storeCodes?: string[] | null;
+    /**
+     * Indicates whether all stores listed by this merchant provide local delivery or not. Acceptable values are `all stores` and `selected stores`
+     */
+    storeServiceType?: string | null;
+  }
+  /**
+   * Time local delivery ends for the day based on the local timezone of the store. `local_cutoff_time` and `store_close_offset_hours` are mutually exclusive.
+   */
+  export interface Schema$ServiceStoreConfigCutoffConfig {
+    /**
+     * Time in hours and minutes in the local timezone when local delivery ends.
+     */
+    localCutoffTime?: Schema$ServiceStoreConfigCutoffConfigLocalCutoffTime;
+    /**
+     * Merchants can opt-out of showing n+1 day local delivery when they have a shipping service configured to n day local delivery. For example, if the shipping service defines same-day delivery, and it's past the cut-off, setting this field to `true` results in the calculated shipping service rate returning `NO_DELIVERY_POST_CUTOFF`. In the same example, setting this field to `false` results in the calculated shipping time being one day. This is only for local delivery.
+     */
+    noDeliveryPostCutoff?: boolean | null;
+    /**
+     * Represents cutoff time as the number of hours before store closing. Mutually exclusive with other fields (hour and minute).
+     */
+    storeCloseOffsetHours?: string | null;
+  }
+  /**
+   * Time in hours and minutes in the local timezone when local delivery ends.
+   */
+  export interface Schema$ServiceStoreConfigCutoffConfigLocalCutoffTime {
+    /**
+     * Hour local delivery orders must be placed by to process the same day.
+     */
+    hour?: string | null;
+    /**
+     * Minute local delivery orders must be placed by to process the same day.
+     */
+    minute?: string | null;
   }
   /**
    *  Settlement reports detail order-level and item-level credits and debits between you and Google.
@@ -27871,7 +28086,9 @@ export namespace content_v2_1 {
      *   //   "availabilityDate": "my_availabilityDate",
      *   //   "brand": "my_brand",
      *   //   "canonicalLink": "my_canonicalLink",
+     *   //   "certifications": [],
      *   //   "channel": "my_channel",
+     *   //   "cloudExportAdditionalProperties": [],
      *   //   "color": "my_color",
      *   //   "condition": "my_condition",
      *   //   "contentLanguage": "my_contentLanguage",
@@ -27883,6 +28100,7 @@ export namespace content_v2_1 {
      *   //   "customLabel3": "my_customLabel3",
      *   //   "customLabel4": "my_customLabel4",
      *   //   "description": "my_description",
+     *   //   "disclosureDate": "my_disclosureDate",
      *   //   "displayAdsId": "my_displayAdsId",
      *   //   "displayAdsLink": "my_displayAdsLink",
      *   //   "displayAdsSimilarIds": [],
@@ -27952,7 +28170,8 @@ export namespace content_v2_1 {
      *   //   "title": "my_title",
      *   //   "transitTimeLabel": "my_transitTimeLabel",
      *   //   "unitPricingBaseMeasure": {},
-     *   //   "unitPricingMeasure": {}
+     *   //   "unitPricingMeasure": {},
+     *   //   "virtualModelLink": "my_virtualModelLink"
      *   // }
      * }
      *
@@ -28093,7 +28312,9 @@ export namespace content_v2_1 {
      *       //   "availabilityDate": "my_availabilityDate",
      *       //   "brand": "my_brand",
      *       //   "canonicalLink": "my_canonicalLink",
+     *       //   "certifications": [],
      *       //   "channel": "my_channel",
+     *       //   "cloudExportAdditionalProperties": [],
      *       //   "color": "my_color",
      *       //   "condition": "my_condition",
      *       //   "contentLanguage": "my_contentLanguage",
@@ -28105,6 +28326,7 @@ export namespace content_v2_1 {
      *       //   "customLabel3": "my_customLabel3",
      *       //   "customLabel4": "my_customLabel4",
      *       //   "description": "my_description",
+     *       //   "disclosureDate": "my_disclosureDate",
      *       //   "displayAdsId": "my_displayAdsId",
      *       //   "displayAdsLink": "my_displayAdsLink",
      *       //   "displayAdsSimilarIds": [],
@@ -28174,7 +28396,8 @@ export namespace content_v2_1 {
      *       //   "title": "my_title",
      *       //   "transitTimeLabel": "my_transitTimeLabel",
      *       //   "unitPricingBaseMeasure": {},
-     *       //   "unitPricingMeasure": {}
+     *       //   "unitPricingMeasure": {},
+     *       //   "virtualModelLink": "my_virtualModelLink"
      *       // }
      *     },
      *   });
@@ -28193,7 +28416,9 @@ export namespace content_v2_1 {
      *   //   "availabilityDate": "my_availabilityDate",
      *   //   "brand": "my_brand",
      *   //   "canonicalLink": "my_canonicalLink",
+     *   //   "certifications": [],
      *   //   "channel": "my_channel",
+     *   //   "cloudExportAdditionalProperties": [],
      *   //   "color": "my_color",
      *   //   "condition": "my_condition",
      *   //   "contentLanguage": "my_contentLanguage",
@@ -28205,6 +28430,7 @@ export namespace content_v2_1 {
      *   //   "customLabel3": "my_customLabel3",
      *   //   "customLabel4": "my_customLabel4",
      *   //   "description": "my_description",
+     *   //   "disclosureDate": "my_disclosureDate",
      *   //   "displayAdsId": "my_displayAdsId",
      *   //   "displayAdsLink": "my_displayAdsLink",
      *   //   "displayAdsSimilarIds": [],
@@ -28274,7 +28500,8 @@ export namespace content_v2_1 {
      *   //   "title": "my_title",
      *   //   "transitTimeLabel": "my_transitTimeLabel",
      *   //   "unitPricingBaseMeasure": {},
-     *   //   "unitPricingMeasure": {}
+     *   //   "unitPricingMeasure": {},
+     *   //   "virtualModelLink": "my_virtualModelLink"
      *   // }
      * }
      *
@@ -28558,7 +28785,9 @@ export namespace content_v2_1 {
      *       //   "availabilityDate": "my_availabilityDate",
      *       //   "brand": "my_brand",
      *       //   "canonicalLink": "my_canonicalLink",
+     *       //   "certifications": [],
      *       //   "channel": "my_channel",
+     *       //   "cloudExportAdditionalProperties": [],
      *       //   "color": "my_color",
      *       //   "condition": "my_condition",
      *       //   "contentLanguage": "my_contentLanguage",
@@ -28570,6 +28799,7 @@ export namespace content_v2_1 {
      *       //   "customLabel3": "my_customLabel3",
      *       //   "customLabel4": "my_customLabel4",
      *       //   "description": "my_description",
+     *       //   "disclosureDate": "my_disclosureDate",
      *       //   "displayAdsId": "my_displayAdsId",
      *       //   "displayAdsLink": "my_displayAdsLink",
      *       //   "displayAdsSimilarIds": [],
@@ -28639,7 +28869,8 @@ export namespace content_v2_1 {
      *       //   "title": "my_title",
      *       //   "transitTimeLabel": "my_transitTimeLabel",
      *       //   "unitPricingBaseMeasure": {},
-     *       //   "unitPricingMeasure": {}
+     *       //   "unitPricingMeasure": {},
+     *       //   "virtualModelLink": "my_virtualModelLink"
      *       // }
      *     },
      *   });
@@ -28658,7 +28889,9 @@ export namespace content_v2_1 {
      *   //   "availabilityDate": "my_availabilityDate",
      *   //   "brand": "my_brand",
      *   //   "canonicalLink": "my_canonicalLink",
+     *   //   "certifications": [],
      *   //   "channel": "my_channel",
+     *   //   "cloudExportAdditionalProperties": [],
      *   //   "color": "my_color",
      *   //   "condition": "my_condition",
      *   //   "contentLanguage": "my_contentLanguage",
@@ -28670,6 +28903,7 @@ export namespace content_v2_1 {
      *   //   "customLabel3": "my_customLabel3",
      *   //   "customLabel4": "my_customLabel4",
      *   //   "description": "my_description",
+     *   //   "disclosureDate": "my_disclosureDate",
      *   //   "displayAdsId": "my_displayAdsId",
      *   //   "displayAdsLink": "my_displayAdsLink",
      *   //   "displayAdsSimilarIds": [],
@@ -28739,7 +28973,8 @@ export namespace content_v2_1 {
      *   //   "title": "my_title",
      *   //   "transitTimeLabel": "my_transitTimeLabel",
      *   //   "unitPricingBaseMeasure": {},
-     *   //   "unitPricingMeasure": {}
+     *   //   "unitPricingMeasure": {},
+     *   //   "virtualModelLink": "my_virtualModelLink"
      *   // }
      * }
      *
@@ -29981,6 +30216,149 @@ export namespace content_v2_1 {
         return createAPIRequest<Schema$Promotion>(parameters);
       }
     }
+
+    /**
+     * List all promotions from your Merchant Center account.
+     * @example
+     * ```js
+     * // Before running the sample:
+     * // - Enable the API at:
+     * //   https://console.developers.google.com/apis/api/content.googleapis.com
+     * // - Login into gcloud by running:
+     * //   `$ gcloud auth application-default login`
+     * // - Install the npm module by running:
+     * //   `$ npm install googleapis`
+     *
+     * const {google} = require('googleapis');
+     * const content = google.content('v2.1');
+     *
+     * async function main() {
+     *   const auth = new google.auth.GoogleAuth({
+     *     // Scopes can be specified either as an array or as a single, space-delimited string.
+     *     scopes: ['https://www.googleapis.com/auth/content'],
+     *   });
+     *
+     *   // Acquire an auth client, and bind it to all future calls
+     *   const authClient = await auth.getClient();
+     *   google.options({auth: authClient});
+     *
+     *   // Do the magic
+     *   const res = await content.promotions.list({
+     *     // [CLDR country code](http://www.unicode.org/repos/cldr/tags/latest/common/main/en.xml) (for example, "US"), used as a filter on promotions target country.
+     *     countryCode: 'placeholder-value',
+     *     // The two-letter ISO 639-1 language code associated with the promotions, used as a filter.
+     *     languageCode: 'placeholder-value',
+     *     // Required. The ID of the account that contains the collection.
+     *     merchantId: 'placeholder-value',
+     *     // The maximum number of promotions to return. The service may return fewer than this value. If unspecified, at most 50 labels will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+     *     pageSize: 'placeholder-value',
+     *     // A page token, received from a previous `ListPromotion` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListPromotion` must match the call that provided the page token.
+     *     pageToken: 'placeholder-value',
+     *   });
+     *   console.log(res.data);
+     *
+     *   // Example response
+     *   // {
+     *   //   "nextPageToken": "my_nextPageToken",
+     *   //   "promotions": []
+     *   // }
+     * }
+     *
+     * main().catch(e => {
+     *   console.error(e);
+     *   throw e;
+     * });
+     *
+     * ```
+     *
+     * @param params - Parameters for request
+     * @param options - Optionally override request options, such as `url`, `method`, and `encoding`.
+     * @param callback - Optional callback that handles the response.
+     * @returns A promise if used with async/await, or void if used with a callback.
+     */
+    list(
+      params: Params$Resource$Promotions$List,
+      options: StreamMethodOptions
+    ): GaxiosPromise<Readable>;
+    list(
+      params?: Params$Resource$Promotions$List,
+      options?: MethodOptions
+    ): GaxiosPromise<Schema$ListPromotionResponse>;
+    list(
+      params: Params$Resource$Promotions$List,
+      options: StreamMethodOptions | BodyResponseCallback<Readable>,
+      callback: BodyResponseCallback<Readable>
+    ): void;
+    list(
+      params: Params$Resource$Promotions$List,
+      options:
+        | MethodOptions
+        | BodyResponseCallback<Schema$ListPromotionResponse>,
+      callback: BodyResponseCallback<Schema$ListPromotionResponse>
+    ): void;
+    list(
+      params: Params$Resource$Promotions$List,
+      callback: BodyResponseCallback<Schema$ListPromotionResponse>
+    ): void;
+    list(callback: BodyResponseCallback<Schema$ListPromotionResponse>): void;
+    list(
+      paramsOrCallback?:
+        | Params$Resource$Promotions$List
+        | BodyResponseCallback<Schema$ListPromotionResponse>
+        | BodyResponseCallback<Readable>,
+      optionsOrCallback?:
+        | MethodOptions
+        | StreamMethodOptions
+        | BodyResponseCallback<Schema$ListPromotionResponse>
+        | BodyResponseCallback<Readable>,
+      callback?:
+        | BodyResponseCallback<Schema$ListPromotionResponse>
+        | BodyResponseCallback<Readable>
+    ):
+      | void
+      | GaxiosPromise<Schema$ListPromotionResponse>
+      | GaxiosPromise<Readable> {
+      let params = (paramsOrCallback || {}) as Params$Resource$Promotions$List;
+      let options = (optionsOrCallback || {}) as MethodOptions;
+
+      if (typeof paramsOrCallback === 'function') {
+        callback = paramsOrCallback;
+        params = {} as Params$Resource$Promotions$List;
+        options = {};
+      }
+
+      if (typeof optionsOrCallback === 'function') {
+        callback = optionsOrCallback;
+        options = {};
+      }
+
+      const rootUrl =
+        options.rootUrl || 'https://shoppingcontent.googleapis.com/';
+      const parameters = {
+        options: Object.assign(
+          {
+            url: (rootUrl + '/content/v2.1/{merchantId}/promotions').replace(
+              /([^:]\/)\/+/g,
+              '$1'
+            ),
+            method: 'GET',
+          },
+          options
+        ),
+        params,
+        requiredParams: ['merchantId'],
+        pathParams: ['merchantId'],
+        context: this.context,
+      };
+      if (callback) {
+        createAPIRequest<Schema$ListPromotionResponse>(
+          parameters,
+          callback as BodyResponseCallback<unknown>
+        );
+      } else {
+        return createAPIRequest<Schema$ListPromotionResponse>(parameters);
+      }
+    }
   }
 
   export interface Params$Resource$Promotions$Create
@@ -30004,6 +30382,28 @@ export namespace content_v2_1 {
      * Required. The ID of the account that contains the collection.
      */
     merchantId?: string;
+  }
+  export interface Params$Resource$Promotions$List extends StandardParameters {
+    /**
+     * [CLDR country code](http://www.unicode.org/repos/cldr/tags/latest/common/main/en.xml) (for example, "US"), used as a filter on promotions target country.
+     */
+    countryCode?: string;
+    /**
+     * The two-letter ISO 639-1 language code associated with the promotions, used as a filter.
+     */
+    languageCode?: string;
+    /**
+     * Required. The ID of the account that contains the collection.
+     */
+    merchantId?: string;
+    /**
+     * The maximum number of promotions to return. The service may return fewer than this value. If unspecified, at most 50 labels will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.
+     */
+    pageSize?: number;
+    /**
+     * A page token, received from a previous `ListPromotion` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListPromotion` must match the call that provided the page token.
+     */
+    pageToken?: string;
   }
 
   export class Resource$Pubsubnotificationsettings {
@@ -30513,7 +30913,7 @@ export namespace content_v2_1 {
      *
      *   // Do the magic
      *   const res = await content.recommendations.generate({
-     *     // Optional. List of allowed tags. Tags are a set of predefined strings that describe the category that individual recommendation types. User can specify zero or more tags in this field to indicate what group of recommendations they want to receive. Current list of supported tags: - TREND
+     *     // Optional. List of allowed tags. Tags are a set of predefined strings that describe the category that individual recommendation types belong to. User can specify zero or more tags in this field to indicate what categories of recommendations they want to receive. Current list of supported tags: - TREND
      *     allowedTag: 'placeholder-value',
      *     // Optional. Language code of the client. If not set, the result will be in default language (English). This language code affects all fields prefixed with "localized". This should be set to ISO 639-1 country code. List of currently verified supported language code: en, fr, cs, da, de, es, it, nl, no, pl, pt, pt, fi, sv, vi, tr, th, ko, zh-CN, zh-TW, ja, id, hi
      *     languageCode: 'placeholder-value',
@@ -30767,7 +31167,7 @@ export namespace content_v2_1 {
   export interface Params$Resource$Recommendations$Generate
     extends StandardParameters {
     /**
-     * Optional. List of allowed tags. Tags are a set of predefined strings that describe the category that individual recommendation types. User can specify zero or more tags in this field to indicate what group of recommendations they want to receive. Current list of supported tags: - TREND
+     * Optional. List of allowed tags. Tags are a set of predefined strings that describe the category that individual recommendation types belong to. User can specify zero or more tags in this field to indicate what categories of recommendations they want to receive. Current list of supported tags: - TREND
      */
     allowedTag?: string[];
     /**

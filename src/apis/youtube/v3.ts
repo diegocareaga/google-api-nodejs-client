@@ -3231,6 +3231,7 @@ export namespace youtube_v3 {
     title?: string | null;
   }
   export interface Schema$PlaylistStatus {
+    podcastStatus?: string | null;
     /**
      * The playlist's privacy status.
      */
@@ -7621,7 +7622,7 @@ export namespace youtube_v3 {
      *     banAuthor: 'placeholder-value',
      *     // Modifies the moderation status of the comments with the given IDs
      *     id: 'placeholder-value',
-     *     // Specifies the requested moderation status. Note, comments can be in statuses, which are not available through this call. For example, this call does not allow to mark a comment as 'likely spam'. Valid values: MODERATION_STATUS_PUBLISHED, MODERATION_STATUS_HELD_FOR_REVIEW, MODERATION_STATUS_REJECTED.
+     *     // Specifies the requested moderation status. Note, comments can be in statuses, which are not available through this call. For example, this call does not allow to mark a comment as 'likely spam'. Valid values: 'heldForReview', 'published' or 'rejected'.
      *     moderationStatus: 'placeholder-value',
      *   });
      *   console.log(res.data);
@@ -7920,7 +7921,7 @@ export namespace youtube_v3 {
      */
     id?: string[];
     /**
-     * Specifies the requested moderation status. Note, comments can be in statuses, which are not available through this call. For example, this call does not allow to mark a comment as 'likely spam'. Valid values: MODERATION_STATUS_PUBLISHED, MODERATION_STATUS_HELD_FOR_REVIEW, MODERATION_STATUS_REJECTED.
+     * Specifies the requested moderation status. Note, comments can be in statuses, which are not available through this call. For example, this call does not allow to mark a comment as 'likely spam'. Valid values: 'heldForReview', 'published' or 'rejected'.
      */
     moderationStatus?: string;
   }

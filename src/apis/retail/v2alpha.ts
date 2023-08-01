@@ -260,6 +260,10 @@ export namespace retail_v2alpha {
    */
   export interface Schema$GoogleCloudRetailV2AddLocalInventoriesResponse {}
   /**
+   * Request for AcceptTerms method.
+   */
+  export interface Schema$GoogleCloudRetailV2alphaAcceptTermsRequest {}
+  /**
    * Request for CatalogService.AddCatalogAttribute method.
    */
   export interface Schema$GoogleCloudRetailV2alphaAddCatalogAttributeRequest {
@@ -440,7 +444,7 @@ export namespace retail_v2alpha {
      */
     displayName?: string | null;
     /**
-     * The Merchant Center linking configuration. Once a link is added, the data stream from Merchant Center to Cloud Retail will be enabled automatically. The requester must have access to the merchant center account in order to make changes to this field.
+     * The Merchant Center linking configuration. After a link is added, the data stream from Merchant Center to Cloud Retail will be enabled automatically. The requester must have access to the Merchant Center account in order to make changes to this field.
      */
     merchantCenterLinkingConfig?: Schema$GoogleCloudRetailV2alphaMerchantCenterLinkingConfig;
     /**
@@ -465,15 +469,7 @@ export namespace retail_v2alpha {
      */
     exactSearchableOption?: string | null;
     /**
-     * Set manually for numerical attributes only. If the facet SearchResponse.FacetSpec.intervals are not set by the customer for a numerical attribute, then a weekly pipeline will calculate some intervals using some percentiles on the distribution of all its product numerical attribute values. The latter computed intervals might not be ideal for the use case of that attribute. For this reason, the customer can set them manually. As another option, for any numerical attribute that is passed as a facet key in the request along with some given intervals, then these given intervals will be the facet intervals returned in the response.
-     */
-    facetIntervals?: Schema$GoogleCloudRetailV2alphaInterval[];
-    /**
-     * Each instance represents a list of attribute values to ignore as facet values for a specific time range.
-     */
-    ignoredFacetValues?: Schema$GoogleCloudRetailV2alphaCatalogAttributeIgnoredFacetValues[];
-    /**
-     * When AttributesConfig.attribute_config_level is CATALOG_LEVEL_ATTRIBUTE_CONFIG, if INDEXABLE_ENABLED attribute values are indexed so that it can be filtered, faceted, or boosted in SearchService.Search. Must be specified, otherwise throws INVALID_FORMAT error.
+     * When AttributesConfig.attribute_config_level is CATALOG_LEVEL_ATTRIBUTE_CONFIG, if INDEXABLE_ENABLED attribute values are indexed so that it can be filtered, faceted, or boosted in SearchService.Search. Must be specified when AttributesConfig.attribute_config_level is CATALOG_LEVEL_ATTRIBUTE_CONFIG, otherwise throws INVALID_FORMAT error.
      */
     indexableOption?: string | null;
     /**
@@ -493,30 +489,13 @@ export namespace retail_v2alpha {
      */
     retrievableOption?: string | null;
     /**
-     * When AttributesConfig.attribute_config_level is CATALOG_LEVEL_ATTRIBUTE_CONFIG, if SEARCHABLE_ENABLED, attribute values are searchable by text queries in SearchService.Search. If SEARCHABLE_ENABLED but attribute type is numerical, attribute values will not be searchable by text queries in SearchService.Search, as there are no text values associated to numerical attributes. Must be specified, otherwise throws INVALID_FORMAT error.
+     * When AttributesConfig.attribute_config_level is CATALOG_LEVEL_ATTRIBUTE_CONFIG, if SEARCHABLE_ENABLED, attribute values are searchable by text queries in SearchService.Search. If SEARCHABLE_ENABLED but attribute type is numerical, attribute values will not be searchable by text queries in SearchService.Search, as there are no text values associated to numerical attributes. Must be specified, when AttributesConfig.attribute_config_level is CATALOG_LEVEL_ATTRIBUTE_CONFIG, otherwise throws INVALID_FORMAT error.
      */
     searchableOption?: string | null;
     /**
      * Output only. The type of this attribute. This is derived from the attribute in Product.attributes.
      */
     type?: string | null;
-  }
-  /**
-   * Facet values to ignore on facets during the specified time range for the given SearchResponse.Facet.key attribute.
-   */
-  export interface Schema$GoogleCloudRetailV2alphaCatalogAttributeIgnoredFacetValues {
-    /**
-     * If start time is empty and end time is not empty, then ignore these facet values before end time.
-     */
-    endTime?: string | null;
-    /**
-     * Time range for the current list of facet values to ignore. If multiple time ranges are specified for an facet value for the current attribute, consider all of them. If both are empty, ignore always. If start time and end time are set, then start time must be before end time. If start time is not empty and end time is empty, then will ignore these facet values after the start time.
-     */
-    startTime?: string | null;
-    /**
-     * List of facet values to ignore for the following time range. The facet values are the same as the attribute values.
-     */
-    values?: string[] | null;
   }
   /**
    * The color information of a Product.
@@ -552,7 +531,7 @@ export namespace retail_v2alpha {
      */
     completionResults?: Schema$GoogleCloudRetailV2alphaCompleteQueryResponseCompletionResult[];
     /**
-     * Matched recent searches of this user. The maximum number of recent searches is 10. This field is a restricted feature. If you want to enable it, contact Retail Search support. This feature is only available when CompleteQueryRequest.visitor_id field is set and UserEvent is imported. The recent searches satisfy the follow rules: * They are ordered from latest to oldest. * They are matched with CompleteQueryRequest.query case insensitively. * They are transformed to lower case. * They are UTF-8 safe. Recent searches are deduplicated. More recent searches will be reserved when duplication happens.
+     * Deprecated. Matched recent searches of this user. The maximum number of recent searches is 10. This field is a restricted feature. If you want to enable it, contact Retail Search support. This feature is only available when CompleteQueryRequest.visitor_id field is set and UserEvent is imported. The recent searches satisfy the follow rules: * They are ordered from latest to oldest. * They are matched with CompleteQueryRequest.query case insensitively. * They are transformed to lower case. * They are UTF-8 safe. Recent searches are deduplicated. More recent searches will be reserved when duplication happens.
      */
     recentSearchResults?: Schema$GoogleCloudRetailV2alphaCompleteQueryResponseRecentSearchResult[];
   }
@@ -786,6 +765,36 @@ export namespace retail_v2alpha {
      * The textual values of this custom attribute. For example, `["yellow", "green"]` when the key is "color". Empty string is not allowed. Otherwise, an INVALID_ARGUMENT error is returned. Exactly one of text or numbers should be set. Otherwise, an INVALID_ARGUMENT error is returned.
      */
     text?: string[] | null;
+  }
+  /**
+   * Metadata related to the EnrollSolution method. This will be returned by the google.longrunning.Operation.metadata field.
+   */
+  export interface Schema$GoogleCloudRetailV2alphaEnrollSolutionMetadata {}
+  /**
+   * Request for EnrollSolution method.
+   */
+  export interface Schema$GoogleCloudRetailV2alphaEnrollSolutionRequest {
+    /**
+     * Solution use case to enroll. Currently settable for Browse to enroll. It should be only set when [solution] is set as SolutionType.SOLUTION_TYPE_SEARCH or an INVALID_ARGUMENT error is thrown.
+     */
+    searchSolutionUseCase?: string | null;
+    /**
+     * Required. Solution to enroll.
+     */
+    solution?: string | null;
+  }
+  /**
+   * Response for EnrollSolution method.
+   */
+  export interface Schema$GoogleCloudRetailV2alphaEnrollSolutionResponse {
+    /**
+     * Retail API solution that the project has enrolled.
+     */
+    enrolledSolution?: string | null;
+    /**
+     * Search solution use case that the project has enrolled.
+     */
+    searchSolutionUseCase?: string | null;
   }
   /**
    * Metadata for active A/B testing Experiment.
@@ -1126,6 +1135,15 @@ export namespace retail_v2alpha {
     nextPageToken?: string | null;
   }
   /**
+   * Response for ListEnrolledSolutions method.
+   */
+  export interface Schema$GoogleCloudRetailV2alphaListEnrolledSolutionsResponse {
+    /**
+     * Retail API solutions that the project has enrolled.
+     */
+    enrolledSolutions?: string[] | null;
+  }
+  /**
    * Response for MerchantCenterAccountLinkService.ListMerchantCenterAccountLinks method.
    */
   export interface Schema$GoogleCloudRetailV2alphaListMerchantCenterAccountLinksResponse {
@@ -1201,11 +1219,11 @@ export namespace retail_v2alpha {
     priceInfo?: Schema$GoogleCloudRetailV2alphaPriceInfo;
   }
   /**
-   * Represents a link between a Merchant Center account and a branch. Once a link is established, products from the linked merchant center account will be streamed to the linked branch.
+   * Represents a link between a Merchant Center account and a branch. After a link is established, products from the linked Merchant Center account are streamed to the linked branch.
    */
   export interface Schema$GoogleCloudRetailV2alphaMerchantCenterAccountLink {
     /**
-     * Required. The branch id (e.g. 0/1/2) within the catalog that products from merchant_center_account_id are streamed to. When updating this field, an empty value will use the currently configured default branch. However, changing the default branch later on won't change the linked branch here. A single branch id can only have one linked merchant center account id.
+     * Required. The branch ID (e.g. 0/1/2) within the catalog that products from merchant_center_account_id are streamed to. When updating this field, an empty value will use the currently configured default branch. However, changing the default branch later on won't change the linked branch here. A single branch ID can only have one linked Merchant Center account ID.
      */
     branchId?: string | null;
     /**
@@ -1236,6 +1254,10 @@ export namespace retail_v2alpha {
      * Output only. Google Cloud project ID.
      */
     projectId?: string | null;
+    /**
+     * Optional. An optional arbitrary string that could be used as a tag for tracking link source.
+     */
+    source?: string | null;
     /**
      * Output only. Represents the state of the link.
      */
@@ -1268,11 +1290,11 @@ export namespace retail_v2alpha {
     primaryFeedName?: string | null;
   }
   /**
-   * Represents a link between a Merchant Center account and a branch. Once a link is established, products from the linked merchant center account will be streamed to the linked branch.
+   * Represents a link between a Merchant Center account and a branch. After a link is established, products from the linked Merchant Center account are streamed to the linked branch.
    */
   export interface Schema$GoogleCloudRetailV2alphaMerchantCenterLink {
     /**
-     * The branch ID (e.g. 0/1/2) within this catalog that products from merchant_center_account_id are streamed to. When updating this field, an empty value will use the currently configured default branch. However, changing the default branch later on won't change the linked branch here. A single branch ID can only have one linked merchant center account ID.
+     * The branch ID (e.g. 0/1/2) within this catalog that products from merchant_center_account_id are streamed to. When updating this field, an empty value will use the currently configured default branch. However, changing the default branch later on won't change the linked branch here. A single branch ID can only have one linked Merchant Center account ID.
      */
     branchId?: string | null;
     /**
@@ -1288,7 +1310,7 @@ export namespace retail_v2alpha {
      */
     languageCode?: string | null;
     /**
-     * Required. The linked [Merchant center account ID](https://developers.google.com/shopping-content/guides/accountstatuses). The account must be a standalone account or a sub-account of a MCA.
+     * Required. The linked [Merchant Center account ID](https://developers.google.com/shopping-content/guides/accountstatuses). The account must be a standalone account or a sub-account of a MCA.
      */
     merchantCenterAccountId?: string | null;
     /**
@@ -1375,11 +1397,11 @@ export namespace retail_v2alpha {
     updateTime?: string | null;
   }
   /**
-   * More configs of the frequently-bought-together model type.
+   * Additional configs for the frequently-bought-together model type.
    */
   export interface Schema$GoogleCloudRetailV2alphaModelFrequentlyBoughtTogetherFeaturesConfig {
     /**
-     * Optional. Specifies the context of the model when used in predict requests. Only settable for the `frequently-bought-together` type. Will default to MULTI_CONTEXT if not specified.
+     * Optional. Specifies the context of the model when it is used in predict requests. Can only be set for the `frequently-bought-together` type. If it isn't specified, it defaults to MULTIPLE_CONTEXT_PRODUCTS.
      */
     contextProductsType?: string | null;
   }
@@ -1601,7 +1623,7 @@ export namespace retail_v2alpha {
      */
     availableTime?: string | null;
     /**
-     * The brands of the product. A maximum of 30 brands are allowed. Each brand must be a UTF-8 encoded string with a length limit of 1,000 characters. Otherwise, an INVALID_ARGUMENT error is returned. Corresponding properties: Google Merchant Center property [brand](https://support.google.com/merchants/answer/6324351). Schema.org property [Product.brand](https://schema.org/brand).
+     * The brands of the product. A maximum of 30 brands are allowed unless overridden via pantheon UI. Each brand must be a UTF-8 encoded string with a length limit of 1,000 characters. Otherwise, an INVALID_ARGUMENT error is returned. Corresponding properties: Google Merchant Center property [brand](https://support.google.com/merchants/answer/6324351). Schema.org property [Product.brand](https://schema.org/brand).
      */
     brands?: string[] | null;
     /**
@@ -1768,6 +1790,19 @@ export namespace retail_v2alpha {
      * Which field of [Merchant Center Product](/bigquery-transfer/docs/merchant-center-products-schema) should be imported as Product.id. Acceptable values are: * `offerId` (default): Import `offerId` as the product ID. * `itemGroupId`: Import `itemGroupId` as the product ID. Notice that Retail API will choose one item from the ones with the same `itemGroupId`, and use it to represent the item group. If this field is set to an invalid value other than these, an INVALID_ARGUMENT error is returned. If this field is `itemGroupId` and ingestion_product_type is `variant`, an INVALID_ARGUMENT error is returned. See [Product levels](https://cloud.google.com/retail/docs/catalog#product-levels) for more details.
      */
     merchantCenterProductIdField?: string | null;
+  }
+  /**
+   * Metadata that describes a Cloud Retail Project.
+   */
+  export interface Schema$GoogleCloudRetailV2alphaProject {
+    /**
+     * Output only. Retail API solutions that the project has enrolled.
+     */
+    enrolledSolutions?: string[] | null;
+    /**
+     * Output only. Full resource name of the retail project, such as `projects/{project_id_or_number\}/retailProject`.
+     */
+    name?: string | null;
   }
   /**
    * Promotion specification.
@@ -3001,11 +3036,11 @@ export namespace retail_v2alpha {
     importSummary?: Schema$GoogleCloudRetailV2betaUserEventImportSummary;
   }
   /**
-   * Represents a link between a Merchant Center account and a branch. Once a link is established, products from the linked merchant center account will be streamed to the linked branch.
+   * Represents a link between a Merchant Center account and a branch. After a link is established, products from the linked Merchant Center account are streamed to the linked branch.
    */
   export interface Schema$GoogleCloudRetailV2betaMerchantCenterAccountLink {
     /**
-     * Required. The branch id (e.g. 0/1/2) within the catalog that products from merchant_center_account_id are streamed to. When updating this field, an empty value will use the currently configured default branch. However, changing the default branch later on won't change the linked branch here. A single branch id can only have one linked merchant center account id.
+     * Required. The branch ID (e.g. 0/1/2) within the catalog that products from merchant_center_account_id are streamed to. When updating this field, an empty value will use the currently configured default branch. However, changing the default branch later on won't change the linked branch here. A single branch ID can only have one linked Merchant Center account ID.
      */
     branchId?: string | null;
     /**
@@ -3036,6 +3071,10 @@ export namespace retail_v2alpha {
      * Output only. Google Cloud project ID.
      */
     projectId?: string | null;
+    /**
+     * Optional. An optional arbitrary string that could be used as a tag for tracking link source.
+     */
+    source?: string | null;
     /**
      * Output only. Represents the state of the link.
      */
@@ -3120,11 +3159,11 @@ export namespace retail_v2alpha {
     updateTime?: string | null;
   }
   /**
-   * More configs of the frequently-bought-together model type.
+   * Additional configs for the frequently-bought-together model type.
    */
   export interface Schema$GoogleCloudRetailV2betaModelFrequentlyBoughtTogetherFeaturesConfig {
     /**
-     * Optional. Specifies the context of the model when used in predict requests. Only settable for the `frequently-bought-together` type. Will default to MULTI_CONTEXT if not specified.
+     * Optional. Specifies the context of the model when it is used in predict requests. Can only be set for the `frequently-bought-together` type. If it isn't specified, it defaults to MULTIPLE_CONTEXT_PRODUCTS.
      */
     contextProductsType?: string | null;
   }
@@ -3163,6 +3202,40 @@ export namespace retail_v2alpha {
    * Metadata related to the progress of the Purge operation. This will be returned by the google.longrunning.Operation.metadata field.
    */
   export interface Schema$GoogleCloudRetailV2betaPurgeMetadata {}
+  /**
+   * Metadata related to the progress of the PurgeProducts operation. This will be returned by the google.longrunning.Operation.metadata field.
+   */
+  export interface Schema$GoogleCloudRetailV2betaPurgeProductsMetadata {
+    /**
+     * Operation create time.
+     */
+    createTime?: string | null;
+    /**
+     * Count of entries that encountered errors while processing.
+     */
+    failureCount?: string | null;
+    /**
+     * Count of entries that were deleted successfully.
+     */
+    successCount?: string | null;
+    /**
+     * Operation last update time. If the operation is done, this is also the finish time.
+     */
+    updateTime?: string | null;
+  }
+  /**
+   * Response of the PurgeProductsRequest. If the long running operation is successfully done, then this message is returned by the google.longrunning.Operations.response field.
+   */
+  export interface Schema$GoogleCloudRetailV2betaPurgeProductsResponse {
+    /**
+     * The total count of products purged as a result of the operation.
+     */
+    purgeCount?: string | null;
+    /**
+     * A sample of the product names that will be deleted. Only populated if `force` is set to false. A max of 100 names will be returned and the names are chosen at random.
+     */
+    purgeSample?: string[] | null;
+  }
   /**
    * Response of the PurgeUserEventsRequest. If the long running operation is successfully done, then this message is returned by the google.longrunning.Operations.response field.
    */
@@ -3387,11 +3460,11 @@ export namespace retail_v2alpha {
     updateTime?: string | null;
   }
   /**
-   * More configs of the frequently-bought-together model type.
+   * Additional configs for the frequently-bought-together model type.
    */
   export interface Schema$GoogleCloudRetailV2ModelFrequentlyBoughtTogetherFeaturesConfig {
     /**
-     * Optional. Specifies the context of the model when used in predict requests. Only settable for the `frequently-bought-together` type. Will default to MULTI_CONTEXT if not specified.
+     * Optional. Specifies the context of the model when it is used in predict requests. Can only be set for the `frequently-bought-together` type. If it isn't specified, it defaults to MULTIPLE_CONTEXT_PRODUCTS.
      */
     contextProductsType?: string | null;
   }
@@ -3417,6 +3490,40 @@ export namespace retail_v2alpha {
    * Metadata related to the progress of the Purge operation. This will be returned by the google.longrunning.Operation.metadata field.
    */
   export interface Schema$GoogleCloudRetailV2PurgeMetadata {}
+  /**
+   * Metadata related to the progress of the PurgeProducts operation. This will be returned by the google.longrunning.Operation.metadata field.
+   */
+  export interface Schema$GoogleCloudRetailV2PurgeProductsMetadata {
+    /**
+     * Operation create time.
+     */
+    createTime?: string | null;
+    /**
+     * Count of entries that encountered errors while processing.
+     */
+    failureCount?: string | null;
+    /**
+     * Count of entries that were deleted successfully.
+     */
+    successCount?: string | null;
+    /**
+     * Operation last update time. If the operation is done, this is also the finish time.
+     */
+    updateTime?: string | null;
+  }
+  /**
+   * Response of the PurgeProductsRequest. If the long running operation is successfully done, then this message is returned by the google.longrunning.Operations.response field.
+   */
+  export interface Schema$GoogleCloudRetailV2PurgeProductsResponse {
+    /**
+     * The total count of products purged as a result of the operation.
+     */
+    purgeCount?: string | null;
+    /**
+     * A sample of the product names that will be deleted. Only populated if `force` is set to false. A max of 100 names will be returned and the names are chosen at random.
+     */
+    purgeSample?: string[] | null;
+  }
   /**
    * Response of the PurgeUserEventsRequest. If the long running operation is successfully done, then this message is returned by the google.longrunning.Operations.response field.
    */
@@ -3570,11 +3677,463 @@ export namespace retail_v2alpha {
     context: APIRequestContext;
     locations: Resource$Projects$Locations;
     operations: Resource$Projects$Operations;
+    retailProject: Resource$Projects$Retailproject;
     constructor(context: APIRequestContext) {
       this.context = context;
       this.locations = new Resource$Projects$Locations(this.context);
       this.operations = new Resource$Projects$Operations(this.context);
+      this.retailProject = new Resource$Projects$Retailproject(this.context);
     }
+
+    /**
+     * Enrolls retail API solution for the project. Recommendation solution is enrolled by default when your project enables Retail API. You don't need to call this API for the recommendation solution.
+     * @example
+     * ```js
+     * // Before running the sample:
+     * // - Enable the API at:
+     * //   https://console.developers.google.com/apis/api/retail.googleapis.com
+     * // - Login into gcloud by running:
+     * //   `$ gcloud auth application-default login`
+     * // - Install the npm module by running:
+     * //   `$ npm install googleapis`
+     *
+     * const {google} = require('googleapis');
+     * const retail = google.retail('v2alpha');
+     *
+     * async function main() {
+     *   const auth = new google.auth.GoogleAuth({
+     *     // Scopes can be specified either as an array or as a single, space-delimited string.
+     *     scopes: ['https://www.googleapis.com/auth/cloud-platform'],
+     *   });
+     *
+     *   // Acquire an auth client, and bind it to all future calls
+     *   const authClient = await auth.getClient();
+     *   google.options({auth: authClient});
+     *
+     *   // Do the magic
+     *   const res = await retail.projects.enrollSolution({
+     *     // Required. Full resource name of parent. Format: `projects/{project_number_or_id\}`
+     *     project: 'projects/my-project',
+     *
+     *     // Request body metadata
+     *     requestBody: {
+     *       // request body parameters
+     *       // {
+     *       //   "searchSolutionUseCase": "my_searchSolutionUseCase",
+     *       //   "solution": "my_solution"
+     *       // }
+     *     },
+     *   });
+     *   console.log(res.data);
+     *
+     *   // Example response
+     *   // {
+     *   //   "done": false,
+     *   //   "error": {},
+     *   //   "metadata": {},
+     *   //   "name": "my_name",
+     *   //   "response": {}
+     *   // }
+     * }
+     *
+     * main().catch(e => {
+     *   console.error(e);
+     *   throw e;
+     * });
+     *
+     * ```
+     *
+     * @param params - Parameters for request
+     * @param options - Optionally override request options, such as `url`, `method`, and `encoding`.
+     * @param callback - Optional callback that handles the response.
+     * @returns A promise if used with async/await, or void if used with a callback.
+     */
+    enrollSolution(
+      params: Params$Resource$Projects$Enrollsolution,
+      options: StreamMethodOptions
+    ): GaxiosPromise<Readable>;
+    enrollSolution(
+      params?: Params$Resource$Projects$Enrollsolution,
+      options?: MethodOptions
+    ): GaxiosPromise<Schema$GoogleLongrunningOperation>;
+    enrollSolution(
+      params: Params$Resource$Projects$Enrollsolution,
+      options: StreamMethodOptions | BodyResponseCallback<Readable>,
+      callback: BodyResponseCallback<Readable>
+    ): void;
+    enrollSolution(
+      params: Params$Resource$Projects$Enrollsolution,
+      options:
+        | MethodOptions
+        | BodyResponseCallback<Schema$GoogleLongrunningOperation>,
+      callback: BodyResponseCallback<Schema$GoogleLongrunningOperation>
+    ): void;
+    enrollSolution(
+      params: Params$Resource$Projects$Enrollsolution,
+      callback: BodyResponseCallback<Schema$GoogleLongrunningOperation>
+    ): void;
+    enrollSolution(
+      callback: BodyResponseCallback<Schema$GoogleLongrunningOperation>
+    ): void;
+    enrollSolution(
+      paramsOrCallback?:
+        | Params$Resource$Projects$Enrollsolution
+        | BodyResponseCallback<Schema$GoogleLongrunningOperation>
+        | BodyResponseCallback<Readable>,
+      optionsOrCallback?:
+        | MethodOptions
+        | StreamMethodOptions
+        | BodyResponseCallback<Schema$GoogleLongrunningOperation>
+        | BodyResponseCallback<Readable>,
+      callback?:
+        | BodyResponseCallback<Schema$GoogleLongrunningOperation>
+        | BodyResponseCallback<Readable>
+    ):
+      | void
+      | GaxiosPromise<Schema$GoogleLongrunningOperation>
+      | GaxiosPromise<Readable> {
+      let params = (paramsOrCallback ||
+        {}) as Params$Resource$Projects$Enrollsolution;
+      let options = (optionsOrCallback || {}) as MethodOptions;
+
+      if (typeof paramsOrCallback === 'function') {
+        callback = paramsOrCallback;
+        params = {} as Params$Resource$Projects$Enrollsolution;
+        options = {};
+      }
+
+      if (typeof optionsOrCallback === 'function') {
+        callback = optionsOrCallback;
+        options = {};
+      }
+
+      const rootUrl = options.rootUrl || 'https://retail.googleapis.com/';
+      const parameters = {
+        options: Object.assign(
+          {
+            url: (rootUrl + '/v2alpha/{+project}:enrollSolution').replace(
+              /([^:]\/)\/+/g,
+              '$1'
+            ),
+            method: 'POST',
+          },
+          options
+        ),
+        params,
+        requiredParams: ['project'],
+        pathParams: ['project'],
+        context: this.context,
+      };
+      if (callback) {
+        createAPIRequest<Schema$GoogleLongrunningOperation>(
+          parameters,
+          callback as BodyResponseCallback<unknown>
+        );
+      } else {
+        return createAPIRequest<Schema$GoogleLongrunningOperation>(parameters);
+      }
+    }
+
+    /**
+     * Gets the project. Throws NOT_FOUND if the project wasn't initialized for Retail API Service.
+     * @example
+     * ```js
+     * // Before running the sample:
+     * // - Enable the API at:
+     * //   https://console.developers.google.com/apis/api/retail.googleapis.com
+     * // - Login into gcloud by running:
+     * //   `$ gcloud auth application-default login`
+     * // - Install the npm module by running:
+     * //   `$ npm install googleapis`
+     *
+     * const {google} = require('googleapis');
+     * const retail = google.retail('v2alpha');
+     *
+     * async function main() {
+     *   const auth = new google.auth.GoogleAuth({
+     *     // Scopes can be specified either as an array or as a single, space-delimited string.
+     *     scopes: ['https://www.googleapis.com/auth/cloud-platform'],
+     *   });
+     *
+     *   // Acquire an auth client, and bind it to all future calls
+     *   const authClient = await auth.getClient();
+     *   google.options({auth: authClient});
+     *
+     *   // Do the magic
+     *   const res = await retail.projects.getRetailProject({
+     *     // Required. Full resource name of the project. Format: `projects/{project_number_or_id\}/retailProject`
+     *     name: 'projects/my-project/retailProject',
+     *   });
+     *   console.log(res.data);
+     *
+     *   // Example response
+     *   // {
+     *   //   "enrolledSolutions": [],
+     *   //   "name": "my_name"
+     *   // }
+     * }
+     *
+     * main().catch(e => {
+     *   console.error(e);
+     *   throw e;
+     * });
+     *
+     * ```
+     *
+     * @param params - Parameters for request
+     * @param options - Optionally override request options, such as `url`, `method`, and `encoding`.
+     * @param callback - Optional callback that handles the response.
+     * @returns A promise if used with async/await, or void if used with a callback.
+     */
+    getRetailProject(
+      params: Params$Resource$Projects$Getretailproject,
+      options: StreamMethodOptions
+    ): GaxiosPromise<Readable>;
+    getRetailProject(
+      params?: Params$Resource$Projects$Getretailproject,
+      options?: MethodOptions
+    ): GaxiosPromise<Schema$GoogleCloudRetailV2alphaProject>;
+    getRetailProject(
+      params: Params$Resource$Projects$Getretailproject,
+      options: StreamMethodOptions | BodyResponseCallback<Readable>,
+      callback: BodyResponseCallback<Readable>
+    ): void;
+    getRetailProject(
+      params: Params$Resource$Projects$Getretailproject,
+      options:
+        | MethodOptions
+        | BodyResponseCallback<Schema$GoogleCloudRetailV2alphaProject>,
+      callback: BodyResponseCallback<Schema$GoogleCloudRetailV2alphaProject>
+    ): void;
+    getRetailProject(
+      params: Params$Resource$Projects$Getretailproject,
+      callback: BodyResponseCallback<Schema$GoogleCloudRetailV2alphaProject>
+    ): void;
+    getRetailProject(
+      callback: BodyResponseCallback<Schema$GoogleCloudRetailV2alphaProject>
+    ): void;
+    getRetailProject(
+      paramsOrCallback?:
+        | Params$Resource$Projects$Getretailproject
+        | BodyResponseCallback<Schema$GoogleCloudRetailV2alphaProject>
+        | BodyResponseCallback<Readable>,
+      optionsOrCallback?:
+        | MethodOptions
+        | StreamMethodOptions
+        | BodyResponseCallback<Schema$GoogleCloudRetailV2alphaProject>
+        | BodyResponseCallback<Readable>,
+      callback?:
+        | BodyResponseCallback<Schema$GoogleCloudRetailV2alphaProject>
+        | BodyResponseCallback<Readable>
+    ):
+      | void
+      | GaxiosPromise<Schema$GoogleCloudRetailV2alphaProject>
+      | GaxiosPromise<Readable> {
+      let params = (paramsOrCallback ||
+        {}) as Params$Resource$Projects$Getretailproject;
+      let options = (optionsOrCallback || {}) as MethodOptions;
+
+      if (typeof paramsOrCallback === 'function') {
+        callback = paramsOrCallback;
+        params = {} as Params$Resource$Projects$Getretailproject;
+        options = {};
+      }
+
+      if (typeof optionsOrCallback === 'function') {
+        callback = optionsOrCallback;
+        options = {};
+      }
+
+      const rootUrl = options.rootUrl || 'https://retail.googleapis.com/';
+      const parameters = {
+        options: Object.assign(
+          {
+            url: (rootUrl + '/v2alpha/{+name}').replace(/([^:]\/)\/+/g, '$1'),
+            method: 'GET',
+          },
+          options
+        ),
+        params,
+        requiredParams: ['name'],
+        pathParams: ['name'],
+        context: this.context,
+      };
+      if (callback) {
+        createAPIRequest<Schema$GoogleCloudRetailV2alphaProject>(
+          parameters,
+          callback as BodyResponseCallback<unknown>
+        );
+      } else {
+        return createAPIRequest<Schema$GoogleCloudRetailV2alphaProject>(
+          parameters
+        );
+      }
+    }
+
+    /**
+     * Lists all the retail API solutions the project has enrolled.
+     * @example
+     * ```js
+     * // Before running the sample:
+     * // - Enable the API at:
+     * //   https://console.developers.google.com/apis/api/retail.googleapis.com
+     * // - Login into gcloud by running:
+     * //   `$ gcloud auth application-default login`
+     * // - Install the npm module by running:
+     * //   `$ npm install googleapis`
+     *
+     * const {google} = require('googleapis');
+     * const retail = google.retail('v2alpha');
+     *
+     * async function main() {
+     *   const auth = new google.auth.GoogleAuth({
+     *     // Scopes can be specified either as an array or as a single, space-delimited string.
+     *     scopes: ['https://www.googleapis.com/auth/cloud-platform'],
+     *   });
+     *
+     *   // Acquire an auth client, and bind it to all future calls
+     *   const authClient = await auth.getClient();
+     *   google.options({auth: authClient});
+     *
+     *   // Do the magic
+     *   const res = await retail.projects.listEnrolledSolutions({
+     *     // Required. Full resource name of parent. Format: `projects/{project_number_or_id\}`
+     *     parent: 'projects/my-project',
+     *   });
+     *   console.log(res.data);
+     *
+     *   // Example response
+     *   // {
+     *   //   "enrolledSolutions": []
+     *   // }
+     * }
+     *
+     * main().catch(e => {
+     *   console.error(e);
+     *   throw e;
+     * });
+     *
+     * ```
+     *
+     * @param params - Parameters for request
+     * @param options - Optionally override request options, such as `url`, `method`, and `encoding`.
+     * @param callback - Optional callback that handles the response.
+     * @returns A promise if used with async/await, or void if used with a callback.
+     */
+    listEnrolledSolutions(
+      params: Params$Resource$Projects$Listenrolledsolutions,
+      options: StreamMethodOptions
+    ): GaxiosPromise<Readable>;
+    listEnrolledSolutions(
+      params?: Params$Resource$Projects$Listenrolledsolutions,
+      options?: MethodOptions
+    ): GaxiosPromise<Schema$GoogleCloudRetailV2alphaListEnrolledSolutionsResponse>;
+    listEnrolledSolutions(
+      params: Params$Resource$Projects$Listenrolledsolutions,
+      options: StreamMethodOptions | BodyResponseCallback<Readable>,
+      callback: BodyResponseCallback<Readable>
+    ): void;
+    listEnrolledSolutions(
+      params: Params$Resource$Projects$Listenrolledsolutions,
+      options:
+        | MethodOptions
+        | BodyResponseCallback<Schema$GoogleCloudRetailV2alphaListEnrolledSolutionsResponse>,
+      callback: BodyResponseCallback<Schema$GoogleCloudRetailV2alphaListEnrolledSolutionsResponse>
+    ): void;
+    listEnrolledSolutions(
+      params: Params$Resource$Projects$Listenrolledsolutions,
+      callback: BodyResponseCallback<Schema$GoogleCloudRetailV2alphaListEnrolledSolutionsResponse>
+    ): void;
+    listEnrolledSolutions(
+      callback: BodyResponseCallback<Schema$GoogleCloudRetailV2alphaListEnrolledSolutionsResponse>
+    ): void;
+    listEnrolledSolutions(
+      paramsOrCallback?:
+        | Params$Resource$Projects$Listenrolledsolutions
+        | BodyResponseCallback<Schema$GoogleCloudRetailV2alphaListEnrolledSolutionsResponse>
+        | BodyResponseCallback<Readable>,
+      optionsOrCallback?:
+        | MethodOptions
+        | StreamMethodOptions
+        | BodyResponseCallback<Schema$GoogleCloudRetailV2alphaListEnrolledSolutionsResponse>
+        | BodyResponseCallback<Readable>,
+      callback?:
+        | BodyResponseCallback<Schema$GoogleCloudRetailV2alphaListEnrolledSolutionsResponse>
+        | BodyResponseCallback<Readable>
+    ):
+      | void
+      | GaxiosPromise<Schema$GoogleCloudRetailV2alphaListEnrolledSolutionsResponse>
+      | GaxiosPromise<Readable> {
+      let params = (paramsOrCallback ||
+        {}) as Params$Resource$Projects$Listenrolledsolutions;
+      let options = (optionsOrCallback || {}) as MethodOptions;
+
+      if (typeof paramsOrCallback === 'function') {
+        callback = paramsOrCallback;
+        params = {} as Params$Resource$Projects$Listenrolledsolutions;
+        options = {};
+      }
+
+      if (typeof optionsOrCallback === 'function') {
+        callback = optionsOrCallback;
+        options = {};
+      }
+
+      const rootUrl = options.rootUrl || 'https://retail.googleapis.com/';
+      const parameters = {
+        options: Object.assign(
+          {
+            url: (rootUrl + '/v2alpha/{+parent}:enrolledSolutions').replace(
+              /([^:]\/)\/+/g,
+              '$1'
+            ),
+            method: 'GET',
+          },
+          options
+        ),
+        params,
+        requiredParams: ['parent'],
+        pathParams: ['parent'],
+        context: this.context,
+      };
+      if (callback) {
+        createAPIRequest<Schema$GoogleCloudRetailV2alphaListEnrolledSolutionsResponse>(
+          parameters,
+          callback as BodyResponseCallback<unknown>
+        );
+      } else {
+        return createAPIRequest<Schema$GoogleCloudRetailV2alphaListEnrolledSolutionsResponse>(
+          parameters
+        );
+      }
+    }
+  }
+
+  export interface Params$Resource$Projects$Enrollsolution
+    extends StandardParameters {
+    /**
+     * Required. Full resource name of parent. Format: `projects/{project_number_or_id\}`
+     */
+    project?: string;
+
+    /**
+     * Request body metadata
+     */
+    requestBody?: Schema$GoogleCloudRetailV2alphaEnrollSolutionRequest;
+  }
+  export interface Params$Resource$Projects$Getretailproject
+    extends StandardParameters {
+    /**
+     * Required. Full resource name of the project. Format: `projects/{project_number_or_id\}/retailProject`
+     */
+    name?: string;
+  }
+  export interface Params$Resource$Projects$Listenrolledsolutions
+    extends StandardParameters {
+    /**
+     * Required. Full resource name of parent. Format: `projects/{project_number_or_id\}`
+     */
+    parent?: string;
   }
 
   export class Resource$Projects$Locations {
@@ -9264,7 +9823,7 @@ export namespace retail_v2alpha {
      *   // Do the magic
      *   const res =
      *     await retail.projects.locations.catalogs.merchantCenterAccountLinks.create({
-     *       // Required. The branch resource where this MerchantCenterAccountLink will be created. Format: projects/{PROJECT_NUMBER\}/locations/global/catalogs/{CATALOG_ID\}\}
+     *       // Required. The branch resource where this MerchantCenterAccountLink will be created. Format: `projects/{PROJECT_NUMBER\}/locations/global/catalogs/{CATALOG_ID\}`
      *       parent: 'projects/my-project/locations/my-location/catalogs/my-catalog',
      *
      *       // Request body metadata
@@ -9279,6 +9838,7 @@ export namespace retail_v2alpha {
      *         //   "merchantCenterAccountId": "my_merchantCenterAccountId",
      *         //   "name": "my_name",
      *         //   "projectId": "my_projectId",
+     *         //   "source": "my_source",
      *         //   "state": "my_state"
      *         // }
      *       },
@@ -9421,7 +9981,7 @@ export namespace retail_v2alpha {
      *   // Do the magic
      *   const res =
      *     await retail.projects.locations.catalogs.merchantCenterAccountLinks.delete({
-     *       // Required. Full resource name. Format: projects/{project_number\}/locations/{location_id\}/catalogs/{catalog_id\}/merchantCenterAccountLinks/{merchant_center_account_link_id\}
+     *       // Required. Full resource name. Format: `projects/{project_number\}/locations/{location_id\}/catalogs/{catalog_id\}/merchantCenterAccountLinks/{merchant_center_account_link_id\}`
      *       name: 'projects/my-project/locations/my-location/catalogs/my-catalog/merchantCenterAccountLinks/my-merchantCenterAccountLink',
      *     });
      *   console.log(res.data);
@@ -9550,7 +10110,7 @@ export namespace retail_v2alpha {
      *   // Do the magic
      *   const res =
      *     await retail.projects.locations.catalogs.merchantCenterAccountLinks.list({
-     *       // Required. The parent Catalog of the resource. It must match this format: projects/{PROJECT_NUMBER\}/locations/global/catalogs/{CATALOG_ID\}
+     *       // Required. The parent Catalog of the resource. It must match this format: `projects/{PROJECT_NUMBER\}/locations/global/catalogs/{CATALOG_ID\}`
      *       parent: 'projects/my-project/locations/my-location/catalogs/my-catalog',
      *     });
      *   console.log(res.data);
@@ -9665,7 +10225,7 @@ export namespace retail_v2alpha {
   export interface Params$Resource$Projects$Locations$Catalogs$Merchantcenteraccountlinks$Create
     extends StandardParameters {
     /**
-     * Required. The branch resource where this MerchantCenterAccountLink will be created. Format: projects/{PROJECT_NUMBER\}/locations/global/catalogs/{CATALOG_ID\}\}
+     * Required. The branch resource where this MerchantCenterAccountLink will be created. Format: `projects/{PROJECT_NUMBER\}/locations/global/catalogs/{CATALOG_ID\}`
      */
     parent?: string;
 
@@ -9677,14 +10237,14 @@ export namespace retail_v2alpha {
   export interface Params$Resource$Projects$Locations$Catalogs$Merchantcenteraccountlinks$Delete
     extends StandardParameters {
     /**
-     * Required. Full resource name. Format: projects/{project_number\}/locations/{location_id\}/catalogs/{catalog_id\}/merchantCenterAccountLinks/{merchant_center_account_link_id\}
+     * Required. Full resource name. Format: `projects/{project_number\}/locations/{location_id\}/catalogs/{catalog_id\}/merchantCenterAccountLinks/{merchant_center_account_link_id\}`
      */
     name?: string;
   }
   export interface Params$Resource$Projects$Locations$Catalogs$Merchantcenteraccountlinks$List
     extends StandardParameters {
     /**
-     * Required. The parent Catalog of the resource. It must match this format: projects/{PROJECT_NUMBER\}/locations/global/catalogs/{CATALOG_ID\}
+     * Required. The parent Catalog of the resource. It must match this format: `projects/{PROJECT_NUMBER\}/locations/global/catalogs/{CATALOG_ID\}`
      */
     parent?: string;
   }
@@ -14787,5 +15347,170 @@ export namespace retail_v2alpha {
      * The standard list page token.
      */
     pageToken?: string;
+  }
+
+  export class Resource$Projects$Retailproject {
+    context: APIRequestContext;
+    constructor(context: APIRequestContext) {
+      this.context = context;
+    }
+
+    /**
+     * Accepts service terms for this project. By making requests to this API, you agree to the terms of service linked below. https://cloud.google.com/retail/data-use-terms
+     * @example
+     * ```js
+     * // Before running the sample:
+     * // - Enable the API at:
+     * //   https://console.developers.google.com/apis/api/retail.googleapis.com
+     * // - Login into gcloud by running:
+     * //   `$ gcloud auth application-default login`
+     * // - Install the npm module by running:
+     * //   `$ npm install googleapis`
+     *
+     * const {google} = require('googleapis');
+     * const retail = google.retail('v2alpha');
+     *
+     * async function main() {
+     *   const auth = new google.auth.GoogleAuth({
+     *     // Scopes can be specified either as an array or as a single, space-delimited string.
+     *     scopes: ['https://www.googleapis.com/auth/cloud-platform'],
+     *   });
+     *
+     *   // Acquire an auth client, and bind it to all future calls
+     *   const authClient = await auth.getClient();
+     *   google.options({auth: authClient});
+     *
+     *   // Do the magic
+     *   const res = await retail.projects.retailProject.acceptTerms({
+     *     // Required. Full resource name of the project. Format: `projects/{project_number_or_id\}/retailProject`
+     *     project: 'projects/my-project/retailProject',
+     *
+     *     // Request body metadata
+     *     requestBody: {
+     *       // request body parameters
+     *       // {}
+     *     },
+     *   });
+     *   console.log(res.data);
+     *
+     *   // Example response
+     *   // {
+     *   //   "enrolledSolutions": [],
+     *   //   "name": "my_name"
+     *   // }
+     * }
+     *
+     * main().catch(e => {
+     *   console.error(e);
+     *   throw e;
+     * });
+     *
+     * ```
+     *
+     * @param params - Parameters for request
+     * @param options - Optionally override request options, such as `url`, `method`, and `encoding`.
+     * @param callback - Optional callback that handles the response.
+     * @returns A promise if used with async/await, or void if used with a callback.
+     */
+    acceptTerms(
+      params: Params$Resource$Projects$Retailproject$Acceptterms,
+      options: StreamMethodOptions
+    ): GaxiosPromise<Readable>;
+    acceptTerms(
+      params?: Params$Resource$Projects$Retailproject$Acceptterms,
+      options?: MethodOptions
+    ): GaxiosPromise<Schema$GoogleCloudRetailV2alphaProject>;
+    acceptTerms(
+      params: Params$Resource$Projects$Retailproject$Acceptterms,
+      options: StreamMethodOptions | BodyResponseCallback<Readable>,
+      callback: BodyResponseCallback<Readable>
+    ): void;
+    acceptTerms(
+      params: Params$Resource$Projects$Retailproject$Acceptterms,
+      options:
+        | MethodOptions
+        | BodyResponseCallback<Schema$GoogleCloudRetailV2alphaProject>,
+      callback: BodyResponseCallback<Schema$GoogleCloudRetailV2alphaProject>
+    ): void;
+    acceptTerms(
+      params: Params$Resource$Projects$Retailproject$Acceptterms,
+      callback: BodyResponseCallback<Schema$GoogleCloudRetailV2alphaProject>
+    ): void;
+    acceptTerms(
+      callback: BodyResponseCallback<Schema$GoogleCloudRetailV2alphaProject>
+    ): void;
+    acceptTerms(
+      paramsOrCallback?:
+        | Params$Resource$Projects$Retailproject$Acceptterms
+        | BodyResponseCallback<Schema$GoogleCloudRetailV2alphaProject>
+        | BodyResponseCallback<Readable>,
+      optionsOrCallback?:
+        | MethodOptions
+        | StreamMethodOptions
+        | BodyResponseCallback<Schema$GoogleCloudRetailV2alphaProject>
+        | BodyResponseCallback<Readable>,
+      callback?:
+        | BodyResponseCallback<Schema$GoogleCloudRetailV2alphaProject>
+        | BodyResponseCallback<Readable>
+    ):
+      | void
+      | GaxiosPromise<Schema$GoogleCloudRetailV2alphaProject>
+      | GaxiosPromise<Readable> {
+      let params = (paramsOrCallback ||
+        {}) as Params$Resource$Projects$Retailproject$Acceptterms;
+      let options = (optionsOrCallback || {}) as MethodOptions;
+
+      if (typeof paramsOrCallback === 'function') {
+        callback = paramsOrCallback;
+        params = {} as Params$Resource$Projects$Retailproject$Acceptterms;
+        options = {};
+      }
+
+      if (typeof optionsOrCallback === 'function') {
+        callback = optionsOrCallback;
+        options = {};
+      }
+
+      const rootUrl = options.rootUrl || 'https://retail.googleapis.com/';
+      const parameters = {
+        options: Object.assign(
+          {
+            url: (rootUrl + '/v2alpha/{+project}:acceptTerms').replace(
+              /([^:]\/)\/+/g,
+              '$1'
+            ),
+            method: 'POST',
+          },
+          options
+        ),
+        params,
+        requiredParams: ['project'],
+        pathParams: ['project'],
+        context: this.context,
+      };
+      if (callback) {
+        createAPIRequest<Schema$GoogleCloudRetailV2alphaProject>(
+          parameters,
+          callback as BodyResponseCallback<unknown>
+        );
+      } else {
+        return createAPIRequest<Schema$GoogleCloudRetailV2alphaProject>(
+          parameters
+        );
+      }
+    }
+  }
+
+  export interface Params$Resource$Projects$Retailproject$Acceptterms
+    extends StandardParameters {
+    /**
+     * Required. Full resource name of the project. Format: `projects/{project_number_or_id\}/retailProject`
+     */
+    project?: string;
+
+    /**
+     * Request body metadata
+     */
+    requestBody?: Schema$GoogleCloudRetailV2alphaAcceptTermsRequest;
   }
 }

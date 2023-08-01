@@ -127,7 +127,7 @@ export namespace assuredworkloads_v1beta1 {
   }
 
   /**
-   * Request for acknowledging the violation Next Id: 4
+   * Request for acknowledging the violation Next Id: 5
    */
   export interface Schema$GoogleCloudAssuredworkloadsV1beta1AcknowledgeViolationRequest {
     /**
@@ -151,6 +151,31 @@ export namespace assuredworkloads_v1beta1 {
      * A list of blockers that should be addressed before moving the source project or project-based workload to the destination folder-based workload.
      */
     blockers?: string[] | null;
+  }
+  /**
+   * Operation metadata to give request details of CreateWorkload.
+   */
+  export interface Schema$GoogleCloudAssuredworkloadsV1beta1CreateWorkloadOperationMetadata {
+    /**
+     * Optional. Compliance controls that should be applied to the resources managed by the workload.
+     */
+    complianceRegime?: string | null;
+    /**
+     * Optional. Time when the operation was created.
+     */
+    createTime?: string | null;
+    /**
+     * Optional. The display name of the workload.
+     */
+    displayName?: string | null;
+    /**
+     * Optional. The parent of the workload.
+     */
+    parent?: string | null;
+    /**
+     * Optional. Resource properties in the input that are used for creating/customizing workload resources.
+     */
+    resourceSettings?: Schema$GoogleCloudAssuredworkloadsV1beta1WorkloadResourceSettings[];
   }
   /**
    * Response of ListViolations endpoint.
@@ -224,6 +249,10 @@ export namespace assuredworkloads_v1beta1 {
      */
     exceptionAuditLogLink?: string | null;
     /**
+     * Output only. List of all the exception detail added for the violation.
+     */
+    exceptionContexts?: Schema$GoogleCloudAssuredworkloadsV1beta1ViolationExceptionContext[];
+    /**
      * Output only. Immutable. Name of the Violation. Format: organizations/{organization\}/locations/{location\}/workloads/{workload_id\}/violations/{violations_id\}
      */
     name?: string | null;
@@ -231,10 +260,6 @@ export namespace assuredworkloads_v1beta1 {
      * Output only. Immutable. Name of the OrgPolicy which was modified with non-compliant change and resulted this violation. Format: projects/{project_number\}/policies/{constraint_name\} folders/{folder_id\}/policies/{constraint_name\} organizations/{organization_id\}/policies/{constraint_name\}
      */
     nonCompliantOrgPolicy?: string | null;
-    /**
-     * Output only. Immutable. The org-policy-constraint that was incorrectly changed, which resulted in this violation.
-     */
-    orgPolicyConstraint?: string | null;
     /**
      * Output only. Compliance violation remediation
      */
@@ -251,6 +276,23 @@ export namespace assuredworkloads_v1beta1 {
      * Output only. The last time when the Violation record was updated.
      */
     updateTime?: string | null;
+  }
+  /**
+   * Violation exception detail. Next Id: 6
+   */
+  export interface Schema$GoogleCloudAssuredworkloadsV1beta1ViolationExceptionContext {
+    /**
+     * Timestamp when the violation was acknowledged.
+     */
+    acknowledgementTime?: string | null;
+    /**
+     * Business justification provided towards the acknowledgement of the violation.
+     */
+    comment?: string | null;
+    /**
+     * Name of the user (or service account) who acknowledged the violation.
+     */
+    userName?: string | null;
   }
   /**
    * Represents remediation guidance to resolve compliance violation for AssuredWorkload
@@ -397,6 +439,10 @@ export namespace assuredworkloads_v1beta1 {
      */
     partner?: string | null;
     /**
+     * Optional. Permissions granted to the AW Partner SA account for the customer workload
+     */
+    partnerPermissions?: Schema$GoogleCloudAssuredworkloadsV1beta1WorkloadPartnerPermissions;
+    /**
      * Input only. The parent resource for the resources managed by this Assured Workload. May be either empty or a folder resource which is a child of the Workload parent. If not specified all resources are created under the parent organization. Format: folders/{folder_id\}
      */
     provisionedResourcesParent?: string | null;
@@ -453,11 +499,11 @@ export namespace assuredworkloads_v1beta1 {
    */
   export interface Schema$GoogleCloudAssuredworkloadsV1beta1WorkloadComplianceStatus {
     /**
-     * Count of active Violations which are acknowledged in the Workload.
+     * Number of current orgPolicy violations which are acknowledged.
      */
     acknowledgedViolationCount?: number | null;
     /**
-     * Count of active Violations which haven't been acknowledged.
+     * Number of current orgPolicy violations which are not acknowledged.
      */
     activeViolationCount?: number | null;
   }
@@ -517,6 +563,19 @@ export namespace assuredworkloads_v1beta1 {
      * Required. Input only. Immutable. [next_rotation_time] will be advanced by this period when the Key Management Service automatically rotates a key. Must be at least 24 hours and at most 876,000 hours.
      */
     rotationPeriod?: string | null;
+  }
+  /**
+   * Permissions granted to the AW Partner SA account for the customer workload
+   */
+  export interface Schema$GoogleCloudAssuredworkloadsV1beta1WorkloadPartnerPermissions {
+    /**
+     * Allow the partner to view inspectability logs and monitoring violations.
+     */
+    dataLogsViewer?: boolean | null;
+    /**
+     * Allow partner to monitor folder and remediate violations
+     */
+    remediateFolderViolations?: boolean | null;
   }
   /**
    * Represent the resources that are children of this Workload.
@@ -1032,6 +1091,7 @@ export namespace assuredworkloads_v1beta1 {
      *       //   "labels": {},
      *       //   "name": "my_name",
      *       //   "partner": "my_partner",
+     *       //   "partnerPermissions": {},
      *       //   "provisionedResourcesParent": "my_provisionedResourcesParent",
      *       //   "resourceSettings": [],
      *       //   "resources": [],
@@ -1334,6 +1394,7 @@ export namespace assuredworkloads_v1beta1 {
      *   //   "labels": {},
      *   //   "name": "my_name",
      *   //   "partner": "my_partner",
+     *   //   "partnerPermissions": {},
      *   //   "provisionedResourcesParent": "my_provisionedResourcesParent",
      *   //   "resourceSettings": [],
      *   //   "resources": [],
@@ -1641,6 +1702,7 @@ export namespace assuredworkloads_v1beta1 {
      *       //   "labels": {},
      *       //   "name": "my_name",
      *       //   "partner": "my_partner",
+     *       //   "partnerPermissions": {},
      *       //   "provisionedResourcesParent": "my_provisionedResourcesParent",
      *       //   "resourceSettings": [],
      *       //   "resources": [],
@@ -1672,6 +1734,7 @@ export namespace assuredworkloads_v1beta1 {
      *   //   "labels": {},
      *   //   "name": "my_name",
      *   //   "partner": "my_partner",
+     *   //   "partnerPermissions": {},
      *   //   "provisionedResourcesParent": "my_provisionedResourcesParent",
      *   //   "resourceSettings": [],
      *   //   "resources": [],
@@ -2402,9 +2465,9 @@ export namespace assuredworkloads_v1beta1 {
      *   //   "category": "my_category",
      *   //   "description": "my_description",
      *   //   "exceptionAuditLogLink": "my_exceptionAuditLogLink",
+     *   //   "exceptionContexts": [],
      *   //   "name": "my_name",
      *   //   "nonCompliantOrgPolicy": "my_nonCompliantOrgPolicy",
-     *   //   "orgPolicyConstraint": "my_orgPolicyConstraint",
      *   //   "remediation": {},
      *   //   "resolveTime": "my_resolveTime",
      *   //   "state": "my_state",

@@ -102,7 +102,7 @@ export namespace analyticsadmin_v1beta {
   /**
    * Google Analytics Admin API
    *
-   *
+   * Manage properties in Google Analytics. Warning: Creating multiple Customer Applications, Accounts, or Projects to simulate or act as a single Customer Application, Account, or Project (respectively) or to circumvent Service-specific usage limits or quotas is a direct violation of Google Cloud Platform Terms of Service as well as Google APIs Terms of Service. These actions can result in immediate termination of your GCP project(s) without any warning.
    *
    * @example
    * ```js
@@ -755,7 +755,7 @@ export namespace analyticsadmin_v1beta {
    */
   export interface Schema$GoogleAnalyticsAdminV1betaDataStreamWebStreamData {
     /**
-     * Immutable. Domain name of the web app being measured, or empty. Example: "http://www.google.com", "https://www.google.com"
+     * Domain name of the web app being measured, or empty. Example: "http://www.google.com", "https://www.google.com"
      */
     defaultUri?: string | null;
     /**
@@ -763,7 +763,7 @@ export namespace analyticsadmin_v1beta {
      */
     firebaseAppId?: string | null;
     /**
-     * Output only. Analytics "Measurement ID", without the "G-" prefix. Example: "G-1A2BCD345E" would just be "1A2BCD345E"
+     * Output only. Analytics Measurement ID. Example: "G-1A2BCD345E"
      */
     measurementId?: string | null;
   }

@@ -175,6 +175,19 @@ export namespace searchads360_v0 {
     type?: string | null;
   }
   /**
+   * A Keyword criterion segment.
+   */
+  export interface Schema$GoogleAdsSearchads360V0Common__Keyword {
+    /**
+     * The AdGroupCriterion resource name.
+     */
+    adGroupCriterion?: string | null;
+    /**
+     * Keyword info.
+     */
+    info?: Schema$GoogleAdsSearchads360V0Common__KeywordInfo;
+  }
+  /**
    * A keyword criterion.
    */
   export interface Schema$GoogleAdsSearchads360V0Common__KeywordInfo {
@@ -560,6 +573,19 @@ export namespace searchads360_v0 {
     visits?: number | null;
   }
   /**
+   * An asset representing a mobile app.
+   */
+  export interface Schema$GoogleAdsSearchads360V0Common__MobileAppAsset {
+    /**
+     * Required. A string that uniquely identifies a mobile application. It should just contain the platform native id, like "com.android.ebay" for Android or "12345689" for iOS.
+     */
+    appId?: string | null;
+    /**
+     * Required. The application store that distributes this specific app.
+     */
+    appStore?: string | null;
+  }
+  /**
    * A bidding strategy where bids are a fraction of the advertised price for some good or service.
    */
   export interface Schema$GoogleAdsSearchads360V0Common__PercentCpc {
@@ -582,13 +608,88 @@ export namespace searchads360_v0 {
     optIn?: boolean | null;
   }
   /**
+   * An expanded dynamic search ad.
+   */
+  export interface Schema$GoogleAdsSearchads360V0Common__SearchAds360ExpandedDynamicSearchAdInfo {
+    /**
+     * The tracking id of the ad.
+     */
+    adTrackingId?: string | null;
+    /**
+     * The first line of the ad's description.
+     */
+    description1?: string | null;
+    /**
+     * The second line of the ad's description.
+     */
+    description2?: string | null;
+  }
+  /**
+   * A Search Ads 360 expanded text ad.
+   */
+  export interface Schema$GoogleAdsSearchads360V0Common__SearchAds360ExpandedTextAdInfo {
+    /**
+     * The tracking id of the ad.
+     */
+    adTrackingId?: string | null;
+    /**
+     * The first line of the ad's description.
+     */
+    description1?: string | null;
+    /**
+     * The second line of the ad's description.
+     */
+    description2?: string | null;
+    /**
+     * The headline of the ad.
+     */
+    headline?: string | null;
+    /**
+     * The second headline of the ad.
+     */
+    headline2?: string | null;
+    /**
+     * The third headline of the ad.
+     */
+    headline3?: string | null;
+    /**
+     * Text appended to the auto-generated visible URL with a delimiter.
+     */
+    path1?: string | null;
+    /**
+     * Text appended to path1 with a delimiter.
+     */
+    path2?: string | null;
+  }
+  /**
+   * A Search Ads 360 product ad.
+   */
+  export interface Schema$GoogleAdsSearchads360V0Common__SearchAds360ProductAdInfo {}
+  /**
+   * A Search Ads 360 responsive search ad.
+   */
+  export interface Schema$GoogleAdsSearchads360V0Common__SearchAds360ResponsiveSearchAdInfo {
+    /**
+     * The tracking id of the ad.
+     */
+    adTrackingId?: string | null;
+    /**
+     * Text appended to the auto-generated visible URL with a delimiter.
+     */
+    path1?: string | null;
+    /**
+     * Text appended to path1 with a delimiter.
+     */
+    path2?: string | null;
+  }
+  /**
    * A Search Ads 360 text ad.
    */
   export interface Schema$GoogleAdsSearchads360V0Common__SearchAds360TextAdInfo {
     /**
      * The tracking id of the ad.
      */
-    adTrackId?: string | null;
+    adTrackingId?: string | null;
     /**
      * The first line of the ad's description.
      */
@@ -615,6 +716,10 @@ export namespace searchads360_v0 {
    */
   export interface Schema$GoogleAdsSearchads360V0Common__Segments {
     /**
+     * Ad network type.
+     */
+    adNetworkType?: string | null;
+    /**
      * Resource name of the conversion action.
      */
     conversionAction?: string | null;
@@ -638,6 +743,10 @@ export namespace searchads360_v0 {
      * Device to which metrics apply.
      */
     device?: string | null;
+    /**
+     * Keyword criterion.
+     */
+    keyword?: Schema$GoogleAdsSearchads360V0Common__Keyword;
     /**
      * Month as represented by the date of the first day of a month. Formatted as yyyy-MM-dd.
      */
@@ -860,6 +969,10 @@ export namespace searchads360_v0 {
      * An error encountered when trying to authorize a user.
      */
     authorizationError?: string | null;
+    /**
+     * The reasons for the custom column error
+     */
+    customColumnError?: string | null;
     /**
      * The reasons for the date error
      */
@@ -1146,6 +1259,14 @@ export namespace searchads360_v0 {
      */
     displayUrl?: string | null;
     /**
+     * Immutable. Details pertaining to an expanded dynamic search ad.
+     */
+    expandedDynamicSearchAd?: Schema$GoogleAdsSearchads360V0Common__SearchAds360ExpandedDynamicSearchAdInfo;
+    /**
+     * Immutable. Details pertaining to an expanded text ad.
+     */
+    expandedTextAd?: Schema$GoogleAdsSearchads360V0Common__SearchAds360ExpandedTextAdInfo;
+    /**
      * The list of possible final URLs after all cross-domain redirects for the ad.
      */
     finalUrls?: string[] | null;
@@ -1158,9 +1279,17 @@ export namespace searchads360_v0 {
      */
     name?: string | null;
     /**
+     * Immutable. Details pertaining to a product ad.
+     */
+    productAd?: Schema$GoogleAdsSearchads360V0Common__SearchAds360ProductAdInfo;
+    /**
      * Immutable. The resource name of the ad. Ad resource names have the form: `customers/{customer_id\}/ads/{ad_id\}`
      */
     resourceName?: string | null;
+    /**
+     * Immutable. Details pertaining to a responsive search ad.
+     */
+    responsiveSearchAd?: Schema$GoogleAdsSearchads360V0Common__SearchAds360ResponsiveSearchAdInfo;
     /**
      * Immutable. Details pertaining to a text ad.
      */
@@ -1388,7 +1517,7 @@ export namespace searchads360_v0 {
      */
     listingGroup?: Schema$GoogleAdsSearchads360V0Common__ListingGroupInfo;
     /**
-     * Immutable. Location.
+     * Output only. Location.
      */
     location?: Schema$GoogleAdsSearchads360V0Common__LocationInfo;
     /**
@@ -1464,6 +1593,64 @@ export namespace searchads360_v0 {
   export interface Schema$GoogleAdsSearchads360V0Resources__AgeRangeView {
     /**
      * Output only. The resource name of the age range view. Age range view resource names have the form: `customers/{customer_id\}/ageRangeViews/{ad_group_id\}~{criterion_id\}`
+     */
+    resourceName?: string | null;
+  }
+  /**
+   * Asset is a part of an ad which can be shared across multiple ads. It can be an image (ImageAsset), a video (YoutubeVideoAsset), etc. Assets are immutable and cannot be removed. To stop an asset from serving, remove the asset from the entity that is using it.
+   */
+  export interface Schema$GoogleAdsSearchads360V0Resources__Asset {
+    /**
+     * Output only. The timestamp when this asset was created. The timestamp is in the customer's time zone and in "yyyy-MM-dd HH:mm:ss" format.
+     */
+    creationTime?: string | null;
+    /**
+     * Output only. The Engine Status for an asset.
+     */
+    engineStatus?: string | null;
+    /**
+     * A list of possible final URLs after all cross domain redirects.
+     */
+    finalUrls?: string[] | null;
+    /**
+     * Output only. The ID of the asset.
+     */
+    id?: string | null;
+    /**
+     * Output only. The datetime when this asset was last modified. The datetime is in the customer's time zone and in "yyyy-MM-dd HH:mm:ss.ssssss" format.
+     */
+    lastModifiedTime?: string | null;
+    /**
+     * A mobile app asset.
+     */
+    mobileAppAsset?: Schema$GoogleAdsSearchads360V0Common__MobileAppAsset;
+    /**
+     * Immutable. The resource name of the asset. Asset resource names have the form: `customers/{customer_id\}/assets/{asset_id\}`
+     */
+    resourceName?: string | null;
+    /**
+     * Output only. The status of the asset.
+     */
+    status?: string | null;
+    /**
+     * URL template for constructing a tracking URL.
+     */
+    trackingUrlTemplate?: string | null;
+    /**
+     * Output only. Type of the asset.
+     */
+    type?: string | null;
+  }
+  /**
+   * An asset set representing a collection of assets. Use AssetSetAsset to link an asset to the asset set.
+   */
+  export interface Schema$GoogleAdsSearchads360V0Resources__AssetSet {
+    /**
+     * Output only. The ID of the asset set.
+     */
+    id?: string | null;
+    /**
+     * Immutable. The resource name of the asset set. Asset set resource names have the form: `customers/{customer_id\}/assetSets/{asset_set_id\}`
      */
     resourceName?: string | null;
   }
@@ -2331,6 +2518,15 @@ export namespace searchads360_v0 {
     referencesMetrics?: boolean | null;
   }
   /**
+   * Response message for CustomerService.ListAccessibleCustomers.
+   */
+  export interface Schema$GoogleAdsSearchads360V0Services__ListAccessibleCustomersResponse {
+    /**
+     * Resource name of customers directly accessible by the user authenticating the call.
+     */
+    resourceNames?: string[] | null;
+  }
+  /**
    * Response message for fetching all custom columns associated with a customer.
    */
   export interface Schema$GoogleAdsSearchads360V0Services__ListCustomColumnsResponse {
@@ -2379,6 +2575,14 @@ export namespace searchads360_v0 {
      * The age range view referenced in the query.
      */
     ageRangeView?: Schema$GoogleAdsSearchads360V0Resources__AgeRangeView;
+    /**
+     * The asset referenced in the query.
+     */
+    asset?: Schema$GoogleAdsSearchads360V0Resources__Asset;
+    /**
+     * The asset set referenced in the query.
+     */
+    assetSet?: Schema$GoogleAdsSearchads360V0Resources__AssetSet;
     /**
      * The bidding strategy referenced in the query.
      */
@@ -2566,7 +2770,145 @@ export namespace searchads360_v0 {
       this.customColumns = new Resource$Customers$Customcolumns(this.context);
       this.searchAds360 = new Resource$Customers$Searchads360(this.context);
     }
+
+    /**
+     * Returns resource names of customers directly accessible by the user authenticating the call. List of thrown errors: [AuthenticationError]() [AuthorizationError]() [HeaderError]() [InternalError]() [QuotaError]() [RequestError]()
+     * @example
+     * ```js
+     * // Before running the sample:
+     * // - Enable the API at:
+     * //   https://console.developers.google.com/apis/api/searchads360.googleapis.com
+     * // - Login into gcloud by running:
+     * //   `$ gcloud auth application-default login`
+     * // - Install the npm module by running:
+     * //   `$ npm install googleapis`
+     *
+     * const {google} = require('googleapis');
+     * const searchads360 = google.searchads360('v0');
+     *
+     * async function main() {
+     *   const auth = new google.auth.GoogleAuth({
+     *     // Scopes can be specified either as an array or as a single, space-delimited string.
+     *     scopes: ['https://www.googleapis.com/auth/doubleclicksearch'],
+     *   });
+     *
+     *   // Acquire an auth client, and bind it to all future calls
+     *   const authClient = await auth.getClient();
+     *   google.options({auth: authClient});
+     *
+     *   // Do the magic
+     *   const res = await searchads360.customers.listAccessibleCustomers({});
+     *   console.log(res.data);
+     *
+     *   // Example response
+     *   // {
+     *   //   "resourceNames": []
+     *   // }
+     * }
+     *
+     * main().catch(e => {
+     *   console.error(e);
+     *   throw e;
+     * });
+     *
+     * ```
+     *
+     * @param params - Parameters for request
+     * @param options - Optionally override request options, such as `url`, `method`, and `encoding`.
+     * @param callback - Optional callback that handles the response.
+     * @returns A promise if used with async/await, or void if used with a callback.
+     */
+    listAccessibleCustomers(
+      params: Params$Resource$Customers$Listaccessiblecustomers,
+      options: StreamMethodOptions
+    ): GaxiosPromise<Readable>;
+    listAccessibleCustomers(
+      params?: Params$Resource$Customers$Listaccessiblecustomers,
+      options?: MethodOptions
+    ): GaxiosPromise<Schema$GoogleAdsSearchads360V0Services__ListAccessibleCustomersResponse>;
+    listAccessibleCustomers(
+      params: Params$Resource$Customers$Listaccessiblecustomers,
+      options: StreamMethodOptions | BodyResponseCallback<Readable>,
+      callback: BodyResponseCallback<Readable>
+    ): void;
+    listAccessibleCustomers(
+      params: Params$Resource$Customers$Listaccessiblecustomers,
+      options:
+        | MethodOptions
+        | BodyResponseCallback<Schema$GoogleAdsSearchads360V0Services__ListAccessibleCustomersResponse>,
+      callback: BodyResponseCallback<Schema$GoogleAdsSearchads360V0Services__ListAccessibleCustomersResponse>
+    ): void;
+    listAccessibleCustomers(
+      params: Params$Resource$Customers$Listaccessiblecustomers,
+      callback: BodyResponseCallback<Schema$GoogleAdsSearchads360V0Services__ListAccessibleCustomersResponse>
+    ): void;
+    listAccessibleCustomers(
+      callback: BodyResponseCallback<Schema$GoogleAdsSearchads360V0Services__ListAccessibleCustomersResponse>
+    ): void;
+    listAccessibleCustomers(
+      paramsOrCallback?:
+        | Params$Resource$Customers$Listaccessiblecustomers
+        | BodyResponseCallback<Schema$GoogleAdsSearchads360V0Services__ListAccessibleCustomersResponse>
+        | BodyResponseCallback<Readable>,
+      optionsOrCallback?:
+        | MethodOptions
+        | StreamMethodOptions
+        | BodyResponseCallback<Schema$GoogleAdsSearchads360V0Services__ListAccessibleCustomersResponse>
+        | BodyResponseCallback<Readable>,
+      callback?:
+        | BodyResponseCallback<Schema$GoogleAdsSearchads360V0Services__ListAccessibleCustomersResponse>
+        | BodyResponseCallback<Readable>
+    ):
+      | void
+      | GaxiosPromise<Schema$GoogleAdsSearchads360V0Services__ListAccessibleCustomersResponse>
+      | GaxiosPromise<Readable> {
+      let params = (paramsOrCallback ||
+        {}) as Params$Resource$Customers$Listaccessiblecustomers;
+      let options = (optionsOrCallback || {}) as MethodOptions;
+
+      if (typeof paramsOrCallback === 'function') {
+        callback = paramsOrCallback;
+        params = {} as Params$Resource$Customers$Listaccessiblecustomers;
+        options = {};
+      }
+
+      if (typeof optionsOrCallback === 'function') {
+        callback = optionsOrCallback;
+        options = {};
+      }
+
+      const rootUrl = options.rootUrl || 'https://searchads360.googleapis.com/';
+      const parameters = {
+        options: Object.assign(
+          {
+            url: (rootUrl + '/v0/customers:listAccessibleCustomers').replace(
+              /([^:]\/)\/+/g,
+              '$1'
+            ),
+            method: 'GET',
+          },
+          options
+        ),
+        params,
+        requiredParams: [],
+        pathParams: [],
+        context: this.context,
+      };
+      if (callback) {
+        createAPIRequest<Schema$GoogleAdsSearchads360V0Services__ListAccessibleCustomersResponse>(
+          parameters,
+          callback as BodyResponseCallback<unknown>
+        );
+      } else {
+        return createAPIRequest<Schema$GoogleAdsSearchads360V0Services__ListAccessibleCustomersResponse>(
+          parameters
+        );
+      }
+    }
   }
+
+  export interface Params$Resource$Customers$Listaccessiblecustomers
+    extends StandardParameters {}
 
   export class Resource$Customers$Customcolumns {
     context: APIRequestContext;
